@@ -1,0 +1,4 @@
+displayName = PotPot Pots
+author = Kirby
+version = 1.0.0.2
+modReferences = CalamityMod
