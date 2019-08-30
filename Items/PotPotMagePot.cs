@@ -48,8 +48,6 @@ namespace PotPot.Items
             player.AddBuff(BuffID.WellFed, this.item.buffTime);
             player.AddBuff(BuffID.MagicPower, this.item.buffTime);
             player.AddBuff(BuffID.ManaRegeneration, this.item.buffTime);
-            player.AddBuff(BuffID.Wrath, this.item.buffTime);
-            player.AddBuff(BuffID.Rage, this.item.buffTime);
 
             Mod CMod = ModLoader.GetMod("CalamityMod");
             if (CMod != null)
@@ -58,6 +56,9 @@ namespace PotPot.Items
                 player.AddBuff(CMod.BuffType("YharimPower"), this.item.buffTime);
                 player.AddBuff(CMod.BuffType("TriumphBuff"), this.item.buffTime);
                 player.AddBuff(CMod.BuffType("TitanScale"), this.item.buffTime);
+                player.AddBuff(CMod.BuffType("ProfanedRageBuff"), this.item.buffTime);
+                player.AddBuff(CMod.BuffType("HolyWrathBuff"), this.item.buffTime);
+                player.AddBuff(CMod.BuffType("StarBeamRye"), this.item.buffTime);
             }
             return true;
         }

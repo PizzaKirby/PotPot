@@ -46,8 +46,6 @@ namespace PotPot.Items
             player.AddBuff(BuffID.Swiftness, this.item.buffTime);
             player.AddBuff(BuffID.WellFed, this.item.buffTime);
             player.AddBuff(BuffID.WeaponImbueIchor, this.item.buffTime);
-            player.AddBuff(BuffID.Wrath, this.item.buffTime);
-            player.AddBuff(BuffID.Rage, this.item.buffTime);
 
             Mod CMod = ModLoader.GetMod("CalamityMod");
             if (CMod != null)
@@ -59,6 +57,8 @@ namespace PotPot.Items
                 player.AddBuff(CMod.BuffType("Omniscience"), this.item.buffTime);
                 player.AddBuff(CMod.BuffType("ArmorShattering"), this.item.buffTime);
                 player.AddBuff(CMod.BuffType("AbyssalWeapon"), this.item.buffTime);
+                player.AddBuff(CMod.BuffType("ProfanedRageBuff"), this.item.buffTime);
+                player.AddBuff(CMod.BuffType("HolyWrathBuff"), this.item.buffTime);
             }
             return true;
         }
