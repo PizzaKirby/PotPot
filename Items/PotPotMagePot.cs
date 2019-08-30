@@ -48,6 +48,8 @@ namespace PotPot.Items
             player.AddBuff(BuffID.WellFed, this.item.buffTime);
             player.AddBuff(BuffID.MagicPower, this.item.buffTime);
             player.AddBuff(BuffID.ManaRegeneration, this.item.buffTime);
+            player.AddBuff(BuffID.Wrath, this.item.buffTime);
+            player.AddBuff(BuffID.Rage, this.item.buffTime);
 
             Mod CMod = ModLoader.GetMod("CalamityMod");
             if (CMod != null)
