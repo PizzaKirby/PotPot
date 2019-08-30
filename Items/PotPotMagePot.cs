@@ -59,6 +59,8 @@ namespace PotPot.Items
                 player.AddBuff(CMod.BuffType("ProfanedRageBuff"), this.item.buffTime);
                 player.AddBuff(CMod.BuffType("HolyWrathBuff"), this.item.buffTime);
                 player.AddBuff(CMod.BuffType("StarBeamRye"), this.item.buffTime);
+                player.AddBuff(CMod.BuffType("Soaring"), this.item.buffTime);
+                player.AddBuff(CMod.BuffType("Photosynthesis"), this.item.buffTime);
             }
             return true;
         }
