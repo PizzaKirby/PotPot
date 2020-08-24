@@ -1,61 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Diagnostics;
-using Terraria;
-using Terraria.GameContent.Dyes;
-using Terraria.GameContent.UI;
-using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
-using Terraria.ID;
-using Terraria.Localization;
-using Terraria.ModLoader;
-using Terraria.UI;
-using PotPot.UI;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Terraria.GameContent.UI.Elements;
-using Terraria.UI.Gamepad;
-using Terraria.ModLoader.Config;
-using Terraria.ModLoader.UI.ModBrowser;
-using Terraria.ModLoader.Core;
-using Terraria.DataStructures;
-using Terraria.GameInput;
-using Terraria.ModLoader.IO;
 using PotPot.Players;
-using log4net.Repository.Hierarchy;
-using Terraria.ModLoader.IO;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System;
-using System.Diagnostics;
-using Terraria;
-using Terraria.GameContent.Dyes;
-using Terraria.GameContent.UI;
-using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
-using Terraria.ID;
-using Terraria.Localization;
-using Terraria.ModLoader;
-using Terraria.UI;
-using PotPot.UI;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+using Terraria;
 using Terraria.GameContent.UI.Elements;
-using Terraria.UI.Gamepad;
-using Terraria.ModLoader.Config;
-using Terraria.ModLoader.UI.ModBrowser;
-using Terraria.ModLoader.Core;
-using Terraria.ModLoader.IO;
+using Terraria.UI;
 
 namespace PotPot.UI
 {
@@ -109,7 +58,7 @@ namespace PotPot.UI
             btnClose.HAlign = 0.99f;
             btnClose.VAlign = 0.01f;
             btnClose.TextColor = Color.Black;
-            btnClose.OnClick += (UIMouseEvent evt, UIElement listeningElement) => { PotPot.Instance.HideUI(); Terraria.Main.NewText("Hewwo"); };
+            btnClose.OnClick += (UIMouseEvent evt, UIElement listeningElement) => PotPot.Instance.HideUI();
             btnClose.OnMouseOver += (UIMouseEvent evt, UIElement listeningElement) => btnClose.TextColor = Color.White;
             btnClose.OnMouseOut += (UIMouseEvent evt, UIElement listeningElement) => btnClose.TextColor = Color.Black;
             panel.Append(btnClose);
@@ -118,7 +67,7 @@ namespace PotPot.UI
         static void OnItemChanged(Object sender, ItemChangedEventArgs e)
         {
             PotPotPlayer modPlayer = Main.LocalPlayer.GetModPlayer<PotPotPlayer>();
-            modPlayer.mod.Logger.Info("EventArgs : OLD[" + e.Old +"] | NEW[" + e.New + "]");
+            //modPlayer.mod.Logger.Info("EventArgs : OLD[" + e.Old +"] | NEW[" + e.New + "]");
             modPlayer.PotPotContent.Remove(e.Old);
             modPlayer.PotPotContent.Add(e.New);
         }

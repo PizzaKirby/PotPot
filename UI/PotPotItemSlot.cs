@@ -4,9 +4,6 @@ using System;
 using Terraria;
 using Terraria.GameInput;
 using Terraria.UI;
-using Terraria.ModLoader;
-using Steamworks;
-using PotPot.Players;
 
 namespace PotPot
 {
