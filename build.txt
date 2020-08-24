@@ -1,4 +1,3 @@
-displayName = PotPot Pots
+displayName = PotPot
 author = Kirby
-version = 1.0.0.3
-modReferences = CalamityMod
+version = 0.1

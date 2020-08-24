@@ -28,7 +28,7 @@ namespace PotPot.Items
             item.UseSound = SoundID.Item3;
             item.buffType = BuffID.Ironskin;
             item.buffTime = int.MaxValue;
-            item.expert = true;
+            //item.expert = true;
         }
 
         public override void AddRecipes()
@@ -42,6 +42,13 @@ namespace PotPot.Items
 
         public override bool UseItem(Player player)
         {
+            if ( player.altFunctionUse == 2)
+            {
+                Main.NewText("Alt Use Item", 155, 155, 155);
+                PotPot.Instance.ShowUI();
+                return true;
+            }
+
             player.AddBuff(BuffID.Endurance, this.item.buffTime);
             player.AddBuff(BuffID.Swiftness, this.item.buffTime);
             player.AddBuff(BuffID.WellFed, this.item.buffTime);
@@ -62,6 +69,11 @@ namespace PotPot.Items
                 player.AddBuff(CMod.BuffType("Soaring"), this.item.buffTime);
                 player.AddBuff(CMod.BuffType("Photosynthesis"), this.item.buffTime);
             }
+            return true;
+        }
+
+        public override bool AltFunctionUse(Player player)
+        {
             return true;
         }
     }

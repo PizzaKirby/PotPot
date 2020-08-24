@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Q/kxSgVbSX14Rr5KCnLRSSFZn3ls2jL3BMxCu7J8N0gsv0ScRGmTYH4fPlWVX5m3nSs2ujtR5Ls+KSvoYN5fGg==",
+  "dgSpecHash": "Kff8p1U0N6D2i1v5ISSUyvhlc2YwWd3hojzsc9DPL0rLQt+zwCimhBX8s+RxE/aK1mWEo80IgE/0Dxn8JX/SzA==",
   "success": true,
   "projectFilePath": "C:\\Users\\pilch\\Documents\\My Games\\Terraria\\ModLoader\\Mod Sources\\PotPot\\PotPot.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\pilch\\.nuget\\packages\\tmodloader.codeassist\\0.1.1\\tmodloader.codeassist.0.1.1.nupkg.sha512"
+  ],
   "logs": []
 }
