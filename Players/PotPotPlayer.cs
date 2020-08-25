@@ -22,6 +22,7 @@ namespace PotPot.Players
         {
             PotPotContent = new List<Item>();
             CP = PotPot.Instance.RefCalamityPlayer;
+            cb |= CalamityBuffs.Tesla;
         }
 
         public override TagCompound Save()
@@ -165,7 +166,7 @@ namespace PotPot.Players
                     }
                 }
                 //pvp
-                if (Main.netMode != 0 && base.player.hostile)
+                if (Main.netMode != NetmodeID.SinglePlayer && base.player.hostile)
                 {
                     for (int j = 0; j < 255; j++)
                     {
@@ -413,6 +414,11 @@ namespace PotPot.Players
                 }
                 player.manaRegenBonus += 2;
                 player.buffImmune[BuffID.StarInBottle] = true;
+            }
+            if ((cb & CalamityBuffs.Tesla) != 0)
+            {
+                PotPot.Instance.RefCalamityPlayer.tesla = true;
+                //TODO make buffimmune
             }
         }
         public void ApplyBuffs(Player player)
