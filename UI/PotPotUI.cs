@@ -11,7 +11,7 @@ namespace PotPot.UI
     class PotPotUI : UIState
     {
         private List<PotPotItemSlot> potInv;
-        private int SLOTCOUNT = 25;
+        private readonly int SLOTCOUNT = 49;
         public PotPotUI()
         {
             potInv = new List<PotPotItemSlot>();
@@ -20,21 +20,20 @@ namespace PotPot.UI
         public override void OnInitialize()
         {
             PotPotDraggablePanel panel = new PotPotDraggablePanel();
-            panel.Width.Set(Main.inventoryBackTexture.Width * 6f, 0);
-            panel.Height.Set(Main.inventoryBackTexture.Height * 6f, 0);
-            panel.Top.Set(340, 0);
-            panel.Left.Set(340, 0);
+            panel.Width.Set(Main.inventoryBackTexture.Width * 8f, 0);
+            panel.Height.Set(Main.inventoryBackTexture.Height * 8f, 0);
+            panel.Top.Set(500, 0);
+            panel.Left.Set(500, 0);
             Append(panel);
 
-            Player player = Main.LocalPlayer;
             PotPotPlayer modPlayer = Main.LocalPlayer.GetModPlayer<PotPotPlayer>();
 
             for ( int i = 0; i < SLOTCOUNT; i++)
             {
                 PotPotItemSlot potionSlot = new PotPotItemSlot();
                 potionSlot.ValidItemFunc = this.IsValidItem;
-                potionSlot.Left.Set(Main.inventoryBackTexture.Width * (i % 5) + (Main.inventoryBackTexture.Width / 4), 0);
-                potionSlot.Top.Set(Main.inventoryBackTexture.Height * (i / 5) + (Main.inventoryBackTexture.Width / 4), 0);
+                potionSlot.Left.Set(Main.inventoryBackTexture.Width * (i % 7) + (Main.inventoryBackTexture.Width / 4) , 0);
+                potionSlot.Top.Set(Main.inventoryBackTexture.Height * (i / 7) + (Main.inventoryBackTexture.Width / 4) , 0);
                 potionSlot.onItemChanged += OnItemChanged;
                 potInv.Add(potionSlot);
                 panel.Append(potionSlot);
@@ -45,9 +44,9 @@ namespace PotPot.UI
                 int index = 0;
                 foreach (Item i in modPlayer.PotPotContent)
                 {
-                    modPlayer.mod.Logger.Info("[STORAGE@" + index + "] " + i);
+                    //modPlayer.mod.Logger.Info("[STORAGE@" + index + "] " + i);
                     potInv[index].SetItem(i);
-                    modPlayer.mod.Logger.Debug("&&" + potInv[index].Item);
+                    //modPlayer.mod.Logger.Debug("&&" + potInv[index].Item);
                     index++;
                     if (index >= SLOTCOUNT)
                         break;

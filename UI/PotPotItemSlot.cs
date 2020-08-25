@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.GameInput;
+using Terraria.ID;
 using Terraria.UI;
 
 namespace PotPot
@@ -58,17 +59,11 @@ namespace PotPot
 
         public void SetItem(Item item)
         {
-
             if (ValidItemFunc == null || ValidItemFunc(item, this.Item))
             {
                 this.Item = item;
                 ItemSlot.Handle(ref this.Item, _context);
             }
-        }
-
-        public void SetItem(Item item, bool fireEvent)
-        {
-
         }
 
     }

@@ -1,3 +1,6 @@
 displayName = PotPot
 author = Kirby
-version = 0.1
+version = 0.8
+sortAfter = CalamityMod
+dllReferences = CalamityHooks
+weakReferences = CalamityMod

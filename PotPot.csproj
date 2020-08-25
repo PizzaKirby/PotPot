@@ -13,4 +13,12 @@
   <ItemGroup>
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="CalamityMod">
+      <HintPath>D:\Temp\Out\CalamityMod\CalamityMod.FNA.dll</HintPath>
+    </Reference>
+    <Reference Include="MMHOOK_CalamityMod.XNA">
+      <HintPath>lib\CalamityHooks.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

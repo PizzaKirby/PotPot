@@ -4,6 +4,8 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using PotPot.UI;
 using System.Collections.Generic;
+using CalamityMod;
+using CalamityMod.CalPlayer;
 
 namespace PotPot
 {
@@ -13,6 +15,7 @@ namespace PotPot
         //public override uint ExtraBuffSlots { get { return 22; } }
 
         internal static PotPot Instance;
+        private Mod Calamity => ModLoader.GetMod("CalamityMod");
         internal UserInterface PotPotInterface;
         internal PotPotUI MainUI;
         private GameTime _lastUpdateUiGameTime;
@@ -30,6 +33,17 @@ namespace PotPot
             {
                 PotPotInterface = new UserInterface();
             }
+
+            if ( Calamity != null)
+            {
+
+                On.CalamityMod.CalPlayer.CalamityPlayer.PostUpdateEquips += CalamityPlayer_PostUpdateEquips;
+            }
+        }
+        private void CalamityPlayer_PostUpdateEquips(On.CalamityMod.CalPlayer.CalamityPlayer.orig_PostUpdateEquips orig, CalamityMod.CalPlayer.CalamityPlayer self)
+        {
+            Main.NewText("Calamity here");
+            orig(self);
         }
 
         public override void UpdateUI(GameTime gameTime)

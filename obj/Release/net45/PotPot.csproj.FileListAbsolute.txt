@@ -17,10 +17,7 @@ C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\bin\Rele
 C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\bin\Release\net45\ReLogic.dll
 C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\bin\Release\net45\Steamworks.NET.dll
 C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\bin\Release\net45\System.ValueTuple.dll
-C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\bin\Release\net45\Terraria.exe
 C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\bin\Release\net45\TerrariaHooks.dll
-C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\bin\Release\net45\Terraria.pdb
-C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\bin\Release\net45\Terraria.xml
 C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\bin\Release\net45\MonoMod.RuntimeDetour.xml
 C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\bin\Release\net45\MonoMod.Utils.xml
 C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\obj\Release\net45\PotPot.csproj.CoreCompileInputs.cache
@@ -28,4 +25,11 @@ C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\obj\Rele
 C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\obj\Release\net45\PotPot.dll
 C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\obj\Release\net45\PotPot.pdb
 C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\obj\Release\net45\PotPot.csprojAssemblyReference.cache
-C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\bin\Release\net45\CalamityMod_v1.4.2.104.dll
+C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\bin\Release\net45\CalamityHooks.dll
+C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\bin\Release\net45\CalamityMod.FNA.dll
+C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\bin\Release\net45\tModLoader.exe
+C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\bin\Release\net45\tModLoader.pdb
+C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\bin\Release\net45\tModLoader.xml
+C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\bin\Release\net45\CalamityMod.FNA.pdb
+C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\obj\Release\net45\PotPot.AssemblyInfoInputs.cache
+C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\obj\Release\net45\PotPot.AssemblyInfo.cs
