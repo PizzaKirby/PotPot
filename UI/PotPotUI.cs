@@ -1,10 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿using IL.Terraria.ID;
+using Microsoft.Xna.Framework;
 using PotPot.Players;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
+using TIID = Terraria.ID.ItemID;
 using Terraria.UI;
+using System.Linq;
 
 namespace PotPot.UI
 {
@@ -12,9 +15,21 @@ namespace PotPot.UI
     {
         private readonly List<PotPotItemSlot> potInv;
         private readonly int SLOTCOUNT = 49;
+        private readonly int[] ITEMWHITELIST;
         public PotPotUI()
         {
             potInv = new List<PotPotItemSlot>();
+            ITEMWHITELIST = new int[] { 
+                TIID.AmmoBox, 
+                TIID.BewitchingTable, 
+                TIID.CrystalBall, 
+                TIID.SharpeningStation, 
+                TIID.Campfire, 
+                TIID.HeartLantern, 
+                TIID.BottledHoney, 
+                TIID.PeaceCandle, 
+                TIID.WaterCandle
+            };
         }
 
         public override void OnInitialize()
@@ -73,18 +88,14 @@ namespace PotPot.UI
 
         private bool IsValidItem(Item newItem, Item currentItem)
         {
-            if (currentItem.buffType != 0)
-            {
-                if (newItem.buffType != 0)
-                    return true;
 
-                if (newItem.Name.Equals(""))
-                    return true;
-            }
-            else
+            if ( newItem.buffType != 0 || newItem.Name == "")
             {
-                if (newItem.buffType != 0)
-                    return true;
+                return true;
+            }
+            else if (Array.Exists(ITEMWHITELIST, element => element.Equals(newItem.type)) || newItem.Name.Contains("Campfire"))
+            {
+                return true;
             }
             return false;
         }

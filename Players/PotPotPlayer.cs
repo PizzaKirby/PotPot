@@ -1,16 +1,14 @@
-﻿using PotPot.UI;
-using System;
+﻿using CalamityMod.CalPlayer;
+using Microsoft.Xna.Framework;
+using PotPot.Buffs;
+using PotPot.UI;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
+using TIID = Terraria.ID.ItemID;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using PotPot.Buffs;
-using Terraria.ID;
-using PotPot;
-using CalamityMod.CalPlayer;
-using System.Numerics;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
 
 namespace PotPot.Players
 {
@@ -18,12 +16,11 @@ namespace PotPot.Players
     {
         public IList<Item> PotPotContent;
         public VanillaBuffs vb = VanillaBuffs.None;
-        public CalamityBuffs cpb = CalamityBuffs.None;
+        public CalamityBuffs cb = CalamityBuffs.None;
         internal CalamityPlayer CP;
         public PotPotPlayer()
         {
             PotPotContent = new List<Item>();
-            vb = VanillaBuffs.WellFed | VanillaBuffs.Ironskin | VanillaBuffs.CozyFire | VanillaBuffs.Bewitched | VanillaBuffs.Inferno;
             CP = PotPot.Instance.RefCalamityPlayer;
         }
 
@@ -206,7 +203,7 @@ namespace PotPot.Players
                 player.statLifeMax2 += player.statLifeMax / 5 / 20 * 20;
                 player.buffImmune[BuffID.Lifeforce] = true;
             }
-            if ((vb & VanillaBuffs.Love) != 0)
+            if ((vb & VanillaBuffs.Lovestruck) != 0)
             {
                 player.buffImmune[BuffID.Lovestruck] = true;
             }
@@ -271,7 +268,7 @@ namespace PotPot.Players
                 player.findTreasure = true;
                 player.buffImmune[BuffID.Spelunker] = true;
             }
-            if ((vb & VanillaBuffs.Stink) != 0)
+            if ((vb & VanillaBuffs.Stinky) != 0)
             {
                 player.stinky = true;
                 player.buffImmune[BuffID.Stinky] = true;
@@ -336,7 +333,12 @@ namespace PotPot.Players
                 player.minionDamage += 0.05f;
                 player.minionKB += 0.5f;
                 player.moveSpeed += 0.2f;
-                player.buffImmune[26] = true;
+                player.buffImmune[BuffID.WellFed] = true;
+            }
+            if ((vb & VanillaBuffs.FlaskIchor) != 0)
+            {
+                player.meleeEnchant = 5;
+                player.buffImmune[BuffID.WeaponImbueIchor] = true;
             }
             if ((vb & VanillaBuffs.Tipsy) != 0)
             {
@@ -357,7 +359,7 @@ namespace PotPot.Players
                 player.maxMinions++;
                 player.buffImmune[BuffID.Bewitched] = true;
             }
-            if ((vb & VanillaBuffs.Claivoyance) != 0)
+            if ((vb & VanillaBuffs.Clairvoyance) != 0)
             {
                 player.magicDamage += 0.05f;
                 player.magicCrit += 2;
@@ -373,7 +375,7 @@ namespace PotPot.Players
                 }
                 player.buffImmune[159] = true;
             }
-            if ((vb & VanillaBuffs.CozyFire) != 0)
+            if ((vb & VanillaBuffs.Campfire) != 0)
             {
                 if (Main.myPlayer == player.whoAmI || Main.netMode == NetmodeID.Server)
                 {
@@ -403,7 +405,7 @@ namespace PotPot.Players
                 }
                 player.buffImmune[BuffID.PeaceCandle] = true;
             }
-            if ((vb & VanillaBuffs.Star) != 0)
+            if ((vb & VanillaBuffs.StarInBottle) != 0)
             {
                 if (Main.myPlayer == player.whoAmI || Main.netMode == NetmodeID.Server)
                 {
@@ -415,18 +417,197 @@ namespace PotPot.Players
         }
         public void ApplyBuffs(Player player)
         {
-            for ( int i = 0; i < 40; i++)
-            {
-                mod.Logger.Debug("[" + i + "]" + (1L << i));
-            }
+            vb = VanillaBuffs.None;
             foreach (Item i in this.PotPotContent)
             {
-                switch(i.buffType)
+                switch (i.type)
                 {
-                    case BuffID.Inferno:
-                        player.AddBuff(i.buffType, int.MaxValue);
+                    case TIID.AmmoReservationPotion:
+                        vb |= VanillaBuffs.AmmoReservation;
                         break;
-                    // set flags
+                    case TIID.ArcheryPotion:
+                        vb |= VanillaBuffs.Archery;
+                        break;
+                    case TIID.BattlePotion:
+                        vb |= VanillaBuffs.Battle;
+                        break;
+                    case TIID.BuilderPotion:
+                        vb |= VanillaBuffs.Builder;
+                        break;
+                    case TIID.CalmingPotion:
+                        vb |= VanillaBuffs.Calming;
+                        break;
+                    case TIID.CratePotion:
+                        vb |= VanillaBuffs.Crate;
+                        break;
+                    case TIID.TrapsightPotion:
+                        vb |= VanillaBuffs.Crate;
+                        break;
+                    case TIID.EndurancePotion:
+                        vb |= VanillaBuffs.Endurance;
+                        break;
+                    case TIID.FeatherfallPotion:
+                        vb |= VanillaBuffs.Featherfall;
+                        break;
+                    case TIID.FishingPotion:
+                        vb |= VanillaBuffs.Fishing;
+                        break;
+                    case TIID.FlipperPotion:
+                        vb |= VanillaBuffs.Flipper;
+                        break;
+                    case TIID.GillsPotion:
+                        vb |= VanillaBuffs.Gills;
+                        break;
+                    case TIID.GravitationPotion:
+                        vb |= VanillaBuffs.Gravitation;
+                        break;
+                    case TIID.HeartreachPotion:
+                        vb |= VanillaBuffs.Heartreach;
+                        break;
+                    case TIID.HunterPotion:
+                        vb |= VanillaBuffs.Hunter;
+                        break;
+                    case TIID.InfernoPotion:
+                        vb |= VanillaBuffs.Inferno;
+                        break;
+                    case TIID.InvisibilityPotion:
+                        vb |= VanillaBuffs.Invisibility;
+                        break;
+                    case TIID.IronskinPotion:
+                        vb |= VanillaBuffs.Ironskin;
+                        break;
+                    case TIID.LifeforcePotion:
+                        vb |= VanillaBuffs.Lifeforce;
+                        break;
+                    case TIID.LovePotion:
+                        vb |= VanillaBuffs.Lovestruck;
+                        break;
+                    case TIID.MagicPowerPotion:
+                        vb |= VanillaBuffs.MagicPower;
+                        break;
+                    case TIID.ManaRegenerationPotion:
+                        vb |= VanillaBuffs.ManaRegen;
+                        break;
+                    case TIID.MiningPotion:
+                        vb |= VanillaBuffs.Mining;
+                        break;
+                    case TIID.NightOwlPotion:
+                        vb |= VanillaBuffs.NightOwl;
+                        break;
+                    case TIID.ObsidianSkinPotion:
+                        vb |= VanillaBuffs.ObsidianSkin;
+                        break;
+                    case TIID.RagePotion:
+                        vb |= VanillaBuffs.Rage;
+                        break;
+                    case TIID.RegenerationPotion:
+                        vb |= VanillaBuffs.Regeneration;
+                        break;
+                    case TIID.ShinePotion:
+                        vb |= VanillaBuffs.Shine;
+                        break;
+                    case TIID.SonarPotion:
+                        vb |= VanillaBuffs.Sonar;
+                        break;
+                    case TIID.SpelunkerPotion:
+                        vb |= VanillaBuffs.Spelunker;
+                        break;
+                    case TIID.StinkPotion:
+                        vb |= VanillaBuffs.Stinky;
+                        break;
+                    case TIID.SummoningPotion:
+                        vb |= VanillaBuffs.Summoning;
+                        break;
+                    case TIID.SwiftnessPotion:
+                        vb |= VanillaBuffs.Swiftness;
+                        break;
+                    case TIID.ThornsPotion:
+                        vb |= VanillaBuffs.Thorns;
+                        break;
+                    case TIID.TitanPotion:
+                        vb |= VanillaBuffs.Titan;
+                        break;
+                    case TIID.WarmthPotion:
+                        vb |= VanillaBuffs.Warmth;
+                        break;
+                    case TIID.WaterWalkingPotion:
+                        vb |= VanillaBuffs.WaterWalking;
+                        break;
+                    case TIID.WrathPotion:
+                        vb |= VanillaBuffs.Wrath;
+                        break;
+                    case TIID.FlaskofCursedFlames:
+                        vb |= VanillaBuffs.FlaskCursedFlames;
+                        break;
+                    case TIID.FlaskofFire:
+                        vb |= VanillaBuffs.FlaskFire;
+                        break;
+                    case TIID.FlaskofGold:
+                        vb |= VanillaBuffs.FlaskGold;
+                        break;
+                    case TIID.FlaskofIchor:
+                        vb |= VanillaBuffs.FlaskIchor;
+                        break;
+                    case TIID.FlaskofNanites:
+                        vb |= VanillaBuffs.FlaskNanites;
+                        break;
+                    case TIID.FlaskofParty:
+                        vb |= VanillaBuffs.FlaskParty;
+                        break;
+                    case TIID.FlaskofPoison:
+                        vb |= VanillaBuffs.FlaskPoison;
+                        break;
+                    case TIID.FlaskofVenom:
+                        vb |= VanillaBuffs.FlaskVenom;
+                        break;
+                    case TIID.AmmoBox:
+                        vb |= VanillaBuffs.AmmoBox;
+                        break;
+                    case TIID.BewitchingTable:
+                        vb |= VanillaBuffs.Bewitched;
+                        break;
+                    case TIID.CrystalBall:
+                        vb |= VanillaBuffs.Clairvoyance;
+                        break;
+                    case TIID.SharpeningStation:
+                        vb |= VanillaBuffs.Sharpened;
+                        break;
+                    case TIID.Campfire:
+                        vb |= VanillaBuffs.Campfire;
+                        break;
+                    case TIID.HeartLantern:
+                        vb |= VanillaBuffs.HeartLamp;
+                        break;
+                    case TIID.BottledHoney:
+                        vb |= VanillaBuffs.Honey;
+                        break;
+                    case TIID.PeaceCandle:
+                        vb |= VanillaBuffs.PeaceCandle;
+                        break;
+                    case TIID.StarinaBottle:
+                        vb |= VanillaBuffs.StarInBottle;
+                        break;
+                    default:
+                        switch(i.buffType)
+                        {
+                            case BuffID.Tipsy:
+                                vb |= VanillaBuffs.Tipsy;
+                                break;
+                            case BuffID.WellFed:
+                                vb |= VanillaBuffs.WellFed;
+                                break;
+                            default:
+                                if ( i.Name.Contains("Campfire"))
+                                {
+                                    vb |= VanillaBuffs.Campfire;
+                                }
+                                else
+                                {
+                                    Main.NewText("[DEFAULT] " + i);
+                                }
+                                break;
+                        }
+                        break;
                 }
             }
         }
