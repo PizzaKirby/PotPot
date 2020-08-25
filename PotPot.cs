@@ -16,6 +16,7 @@ namespace PotPot
 
         internal static PotPot Instance;
         private Mod Calamity => ModLoader.GetMod("CalamityMod");
+        internal CalamityPlayer RefCalamityPlayer;
         internal UserInterface PotPotInterface;
         internal PotPotUI MainUI;
         private GameTime _lastUpdateUiGameTime;
@@ -36,14 +37,14 @@ namespace PotPot
 
             if ( Calamity != null)
             {
-
-                On.CalamityMod.CalPlayer.CalamityPlayer.PostUpdateEquips += CalamityPlayer_PostUpdateEquips;
+                On.CalamityMod.CalPlayer.CalamityPlayer.OnEnterWorld += CalamityPlayer_OnEnterWorld;
             }
         }
-        private void CalamityPlayer_PostUpdateEquips(On.CalamityMod.CalPlayer.CalamityPlayer.orig_PostUpdateEquips orig, CalamityMod.CalPlayer.CalamityPlayer self)
+
+        private void CalamityPlayer_OnEnterWorld(On.CalamityMod.CalPlayer.CalamityPlayer.orig_OnEnterWorld orig, CalamityPlayer self, object player)
         {
-            Main.NewText("Calamity here");
-            orig(self);
+            RefCalamityPlayer = self;
+            orig(self,player);
         }
 
         public override void UpdateUI(GameTime gameTime)

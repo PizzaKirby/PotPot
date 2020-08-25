@@ -10,7 +10,7 @@ namespace PotPot.UI
 {
     class PotPotUI : UIState
     {
-        private List<PotPotItemSlot> potInv;
+        private readonly List<PotPotItemSlot> potInv;
         private readonly int SLOTCOUNT = 49;
         public PotPotUI()
         {
