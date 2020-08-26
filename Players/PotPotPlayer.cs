@@ -205,9 +205,14 @@ namespace PotPot.Players
             }
             if ((vb & VanillaBuffs.Lifeforce) != VanillaBuffs.None)
             {
-                player.lifeForce = true;
-                player.statLifeMax2 += player.statLifeMax / 5 / 20 * 20;
-                player.buffImmune[BuffID.Lifeforce] = true;
+                if ((cb & CalamityBuffs.Cadance) == CalamityBuffs.None)
+                {
+                    player.lifeForce = true;
+                    player.statLifeMax2 += player.statLifeMax / 5 / 20 * 20;
+                    player.buffImmune[BuffID.Lifeforce] = true;
+                }
+                else
+                    vb &= ~VanillaBuffs.Lifeforce;
             }
             if ((vb & VanillaBuffs.Lovestruck) != VanillaBuffs.None)
             {
@@ -243,21 +248,30 @@ namespace PotPot.Players
             }
             if ((vb & VanillaBuffs.Rage) != VanillaBuffs.None)
             {
-                //calamity rogue crit
-                player.meleeCrit += 10;
-                player.thrownCrit += 10;
-                player.magicCrit += 10;
-                player.rangedCrit += 10;
-                if (calamityMod != null)
+                if ((cb & CalamityBuffs.ProfanedRage) == CalamityBuffs.None)
                 {
-                    CP.xRage = true;
+                    player.meleeCrit += 10;
+                    player.thrownCrit += 10;
+                    player.magicCrit += 10;
+                    player.rangedCrit += 10;
+                    if (calamityMod != null && CP != null)
+                    {
+                        CP.xRage = true;
+                    }
+                    player.buffImmune[BuffID.Rage] = true;
                 }
-                player.buffImmune[BuffID.Rage] = true;
+                else
+                    vb &= ~VanillaBuffs.Rage;
             }
             if ((vb & VanillaBuffs.Regeneration) != VanillaBuffs.None)
             {
-                player.lifeRegen += 4;
-                player.buffImmune[BuffID.Regeneration] = true;
+                if ((cb & CalamityBuffs.Cadance) == CalamityBuffs.None)
+                {
+                    player.lifeRegen += 4;
+                    player.buffImmune[BuffID.Regeneration] = true;
+                }
+                else
+                    vb &= ~VanillaBuffs.Regeneration;
             }
             if ((vb & VanillaBuffs.Shine) != VanillaBuffs.None)
             {
@@ -311,17 +325,22 @@ namespace PotPot.Players
             }
             if ((vb & VanillaBuffs.Wrath) != VanillaBuffs.None)
             {
-                player.meleeDamage += 0.1f;
-                player.thrownDamage += 0.1f;
-                player.magicDamage += 0.1f;
-                player.rangedDamage += 0.1f;
-                player.minionDamage += 0.1f;
-
-                if ( calamityMod != null )
+                if ((cb & CalamityBuffs.HolyWrath) == CalamityBuffs.None)
                 {
-                   CP.xWrath = true;  
+                    player.meleeDamage += 0.1f;
+                    player.thrownDamage += 0.1f;
+                    player.magicDamage += 0.1f;
+                    player.rangedDamage += 0.1f;
+                    player.minionDamage += 0.1f;
+
+                    if (calamityMod != null || CP != null)
+                    {
+                        CP.xWrath = true;
+                    }
+                    player.buffImmune[BuffID.Wrath] = true;
                 }
-                player.buffImmune[BuffID.Wrath] = true;
+                else
+                    vb &= ~VanillaBuffs.Wrath;
             }
             if ((vb & VanillaBuffs.WellFed) !=0)
             {
@@ -453,8 +472,13 @@ namespace PotPot.Players
                 }
                 if ((cb & CalamityBuffs.Crumbling) != CalamityBuffs.None)
                 {
-                    CP.armorCrumbling = true;
-                    player.buffImmune[(int)CBID.Crumbling] = true;
+                    if ((cb & CalamityBuffs.Shattering) == CalamityBuffs.None)
+                    {
+                        CP.armorCrumbling = true;
+                        player.buffImmune[(int)CBID.Crumbling] = true;
+                    }
+                    else
+                        cb &= ~CalamityBuffs.Crumbling;
                 }
                 if ((cb & CalamityBuffs.DraconicElixir) != CalamityBuffs.None)
                 {
@@ -496,7 +520,6 @@ namespace PotPot.Players
                 }
                 if ((cb & CalamityBuffs.Shattering) != CalamityBuffs.None)
                 {
-                    //disables crumble
                     CP.armorShattering = true;
                     player.buffImmune[(int)CBID.Shattering] = true;
                 }
