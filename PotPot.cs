@@ -17,7 +17,6 @@ namespace PotPot
         internal UserInterface PotPotInterface;
         internal PotPotUI MainUI;
         private GameTime _lastUpdateUiGameTime;
-
         public PotPot()
         {
             Instance = this;

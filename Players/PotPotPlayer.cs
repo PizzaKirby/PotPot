@@ -5,15 +5,12 @@ using PotPot.UI;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
-using TIID = Terraria.ID.ItemID;
-using CIID = PotPot.Items.CalamityItemID;
-using CBID = PotPot.Buffs.CalamityBuffID;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using System.Reflection;
-using System.Text;
-using System;
+using CBID = PotPot.Buffs.CalamityBuffID;
+using CIID = PotPot.Items.CalamityItemID;
+using TIID = Terraria.ID.ItemID;
 
 namespace PotPot.Players
 {
@@ -23,10 +20,10 @@ namespace PotPot.Players
         public VanillaBuffs vb = VanillaBuffs.None;
         public CalamityBuffs cb = CalamityBuffs.None;
         internal CalamityPlayer CP;
+ 
         public PotPotPlayer()
         {
             PotPotContent = new List<Item>();
-            cb |= CalamityBuffs.Tesla;
         }
 
         public override TagCompound Save()
