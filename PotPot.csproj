@@ -15,7 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="CalamityMod">
-      <HintPath>D:\Temp\Out\CalamityMod\CalamityMod.FNA.dll</HintPath>
+      <HintPath>D:\Temp\Out\CalamityMod\CalamityMod.XNA.dll</HintPath>
     </Reference>
     <Reference Include="MMHOOK_CalamityMod.XNA">
       <HintPath>lib\CalamityHooks.dll</HintPath>

@@ -14,7 +14,7 @@ namespace PotPot
         private readonly int _context;
         private readonly float _scale;
         internal Func<Item,Item, bool> ValidItemFunc;
-        public event EventHandler<ItemChangedEventArgs> onItemChanged;
+        public event EventHandler<ItemChangedEventArgs> OnItemChanged;
         public PotPotItemSlot(int context = ItemSlot.Context.BankItem, float scale = 1f)
         {
             _context = context;
@@ -28,7 +28,7 @@ namespace PotPot
 
         protected virtual void OnItemChangedEvent(ItemChangedEventArgs e)
         {
-            EventHandler<ItemChangedEventArgs> handler = onItemChanged;
+            EventHandler<ItemChangedEventArgs> handler = OnItemChanged;
             handler?.Invoke(this, e);
         }
 

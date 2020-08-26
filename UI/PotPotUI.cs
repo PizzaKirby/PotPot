@@ -49,7 +49,7 @@ namespace PotPot.UI
                 potionSlot.ValidItemFunc = this.IsValidItem;
                 potionSlot.Left.Set(Main.inventoryBackTexture.Width * (i % 7) + (Main.inventoryBackTexture.Width / 4) , 0);
                 potionSlot.Top.Set(Main.inventoryBackTexture.Height * (i / 7) + (Main.inventoryBackTexture.Width / 4) , 0);
-                potionSlot.onItemChanged += OnItemChanged;
+                potionSlot.OnItemChanged += OnItemChanged;
                 potInv.Add(potionSlot);
                 panel.Append(potionSlot);
             }
@@ -59,9 +59,7 @@ namespace PotPot.UI
                 int index = 0;
                 foreach (Item i in modPlayer.PotPotContent)
                 {
-                    //modPlayer.mod.Logger.Info("[STORAGE@" + index + "] " + i);
                     potInv[index].SetItem(i);
-                    //modPlayer.mod.Logger.Debug("&&" + potInv[index].Item);
                     index++;
                     if (index >= SLOTCOUNT)
                         break;
@@ -72,7 +70,7 @@ namespace PotPot.UI
             btnClose.HAlign = 0.99f;
             btnClose.VAlign = 0.01f;
             btnClose.TextColor = Color.Black;
-            btnClose.OnClick += (UIMouseEvent evt, UIElement listeningElement) => PotPot.Instance.HideUI();
+            btnClose.OnClick += (UIMouseEvent evt, UIElement listeningElement) => { PotPot.Instance.HideUI(); modPlayer.ApplyBuffs(Main.LocalPlayer); };
             btnClose.OnMouseOver += (UIMouseEvent evt, UIElement listeningElement) => btnClose.TextColor = Color.White;
             btnClose.OnMouseOut += (UIMouseEvent evt, UIElement listeningElement) => btnClose.TextColor = Color.Black;
             panel.Append(btnClose);
@@ -81,7 +79,6 @@ namespace PotPot.UI
         static void OnItemChanged(Object sender, ItemChangedEventArgs e)
         {
             PotPotPlayer modPlayer = Main.LocalPlayer.GetModPlayer<PotPotPlayer>();
-            //modPlayer.mod.Logger.Info("EventArgs : OLD[" + e.Old +"] | NEW[" + e.New + "]");
             modPlayer.PotPotContent.Remove(e.Old);
             modPlayer.PotPotContent.Add(e.New);
         }

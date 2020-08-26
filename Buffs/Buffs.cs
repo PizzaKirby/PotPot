@@ -5,7 +5,7 @@ namespace PotPot.Buffs
     [Flags]
     enum VanillaBuffs : UInt64
     {
-        None = 1L << 0,
+        None = 0,
         AmmoReservation = 1L << 1,
         Archery = 1L << 2,
         Battle = 1L << 3,
@@ -68,7 +68,7 @@ namespace PotPot.Buffs
     [Flags]
     enum CalamityBuffs : UInt64
     {
-        None = 1L << 0,
+        None = 0,
         AnechoicCoating = 1 << 1,
         AstralInjection = 1L << 2,
         Bounding = 1L << 3,
@@ -81,7 +81,7 @@ namespace PotPot.Buffs
         HolyWrath = 1L << 10,
         Penumbra = 1L << 11,
         Photosynthesis = 1L << 12,
-        ProfranedRage = 1L << 13,
+        ProfanedRage = 1L << 13,
         Revivify = 1L << 14,
         Shattering = 1L << 15,
         Shadow = 1L << 16,
@@ -92,7 +92,7 @@ namespace PotPot.Buffs
         Triumph = 1L << 21,
         Zen = 1L << 22,
         Zerg = 1L << 23,
-        Cadence = 1L << 24,
+        Cadance = 1L << 24,
         Omniscience = 1L << 25,
         YharimsStimulants = 1L << 26,
         BloodyMary = 1L << 27,
@@ -111,7 +111,57 @@ namespace PotPot.Buffs
         TequilaSunrise = 1L << 40,
         Vodka = 1L << 41,
         Whiskey = 1L << 42,
-        WhiteWine = 1L << 43
+        WhiteWine = 1L << 43,
+        AureusCell = 1L << 44,
+    }
+
+    enum CalamityBuffID : int
+    {
+        BloodyMary = 207,
+        CaribbeanRum = 208,
+        CinnamonRoll = 209,
+        Everclear = 210,
+        EvergreenGin = 211,
+        FabsolsVodka = 212,
+        Fireball = 213,
+        Moonshine = 216,
+        MoscowMule = 217,
+        Rum = 219,
+        Screwdriver = 220,
+        StarBeamRye = 221,
+        Tequila = 222,
+        TequilaSunrise = 223,
+        Vodka = 225,
+        Whiskey = 226,
+        WhiteWine = 227,
+        AnechoicCoating = 313,
+        AstralInjection = 316,
+        AureusCell = 7,
+        Bounding = 319,
+        Cadance = 320,
+        CalamitasBrew = 312,
+        CeaselessHunger = 322,
+        Calcium = 321,
+        Crumbling = 314,
+        DraconicElixir = 323,
+        GravityNormalizer = 324,
+        HolyWrath = 325,
+        Penumbra = 328,
+        Photosynthesis = 329,
+        Omniscience = 327,
+        ProfanedRage = 330,
+        Revivify = 331,
+        Shadow = 332,
+        Shattering = 315,
+        Soaring = 333,
+        Sulphurskin = 334,
+        HadalStew = 26,
+        Tesla = 335,
+        TitanScale = 336,
+        Triumph = 337,
+        YharimsStimulants = 338,
+        Zen = 339,
+        Zerg = 340
     }
 }
 

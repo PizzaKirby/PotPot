@@ -6,9 +6,14 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using TIID = Terraria.ID.ItemID;
+using CIID = PotPot.Items.CalamityItemID;
+using CBID = PotPot.Buffs.CalamityBuffID;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using System.Reflection;
+using System.Text;
+using System;
 
 namespace PotPot.Players
 {
@@ -21,7 +26,6 @@ namespace PotPot.Players
         public PotPotPlayer()
         {
             PotPotContent = new List<Item>();
-            CP = PotPot.Instance.RefCalamityPlayer;
             cb |= CalamityBuffs.Tesla;
         }
 
@@ -41,6 +45,12 @@ namespace PotPot.Players
                 PotPot.Instance.MainUI = new PotPotUI();
                 PotPot.Instance.MainUI.Activate();
             }
+            if ( PotPot.Instance.Calamity != null )
+            {
+                CP = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
+            }
+            
+            ApplyBuffs(player);
         }
         public override void Load(TagCompound tag)
         {
@@ -51,96 +61,91 @@ namespace PotPot.Players
             }
         }
 
-        public override void OnRespawn(Player player)
-        {
-            ApplyBuffs(player); 
-        }
-
         public override void PostUpdateEquips()
         {
             Player player = base.player;
             Mod calamityMod = ModLoader.GetMod("CalamityMod");
             //CalamityPlayer calamityPlayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
 
-            if ((vb & VanillaBuffs.AmmoReservation ) != 0)
+            if ((vb & VanillaBuffs.AmmoReservation ) != VanillaBuffs.None)
             {
                 player.ammoPotion = true;
                 player.buffImmune[BuffID.AmmoReservation] = true;
             }
-            if ((vb & VanillaBuffs.Archery) != 0)
+            if ((vb & VanillaBuffs.Archery) != VanillaBuffs.None)
             {
                 player.archery = true;
                 player.buffImmune[BuffID.Archery] = true;
             }
-            if ((vb & VanillaBuffs.Battle) != 0)
+            if ((vb & VanillaBuffs.Battle) != VanillaBuffs.None)
             {
                 player.enemySpawns = true;
                 player.buffImmune[BuffID.Battle] = true;
             }
-            if ((vb & VanillaBuffs.Builder) != 0)
+            if ((vb & VanillaBuffs.Builder) != VanillaBuffs.None)
             {
                 player.tileSpeed += 0.25f;
                 player.wallSpeed += 0.25f;
                 player.blockRange++;
                 player.buffImmune[BuffID.Builder] = true;
             }
-            if ((vb & VanillaBuffs.Calming) != 0)
+            if ((vb & VanillaBuffs.Calming) != VanillaBuffs.None)
             {
                 player.calmed = true;
                 player.buffImmune[BuffID.Calm] = true;
             }
-            if ((vb & VanillaBuffs.Crate) != 0)
+            if ((vb & VanillaBuffs.Crate) != VanillaBuffs.None)
             {
                 player.cratePotion = true;
                 player.buffImmune[BuffID.Crate] = true;
             }
-            if ((vb & VanillaBuffs.Dangersense) != 0)
+            if ((vb & VanillaBuffs.Dangersense) != VanillaBuffs.None)
             {
                 player.dangerSense = true;
                 player.buffImmune[BuffID.Dangersense] = true;
             }
-            if ((vb & VanillaBuffs.Endurance) != 0)
+            if ((vb & VanillaBuffs.Endurance) != VanillaBuffs.None)
             {
                 player.endurance += 0.1f;
                 player.buffImmune[BuffID.Endurance] = true;
             }
-            if ((vb & VanillaBuffs.Featherfall) != 0)
+            if ((vb & VanillaBuffs.Featherfall) != VanillaBuffs.None)
             {
                 player.slowFall = true;
                 player.buffImmune[BuffID.Featherfall] = true;
             }
-            if ((vb & VanillaBuffs.Fishing) != 0)
+            if ((vb & VanillaBuffs.Fishing) != VanillaBuffs.None)
             {
                 player.fishingSkill += 15;
                 player.buffImmune[BuffID.Fishing] = true;
             }
-            if ((vb & VanillaBuffs.Flipper) != 0)
+            if ((vb & VanillaBuffs.Flipper) != VanillaBuffs.None)
             {
                 player.ignoreWater = true;
                 player.accFlipper = true;
                 player.buffImmune[BuffID.Flipper] = true;
             }
-            if ((vb & VanillaBuffs.Gills) != 0)
+            if ((vb & VanillaBuffs.Gills) != VanillaBuffs.None)
             {
                 player.gills = true;
                 player.buffImmune[BuffID.Gills] = true;
             }
-            if ((vb & VanillaBuffs.Gravitation) != 0)
+            if ((vb & VanillaBuffs.Gravitation) != VanillaBuffs.None)
             {
                 player.gravControl = true;
                 player.buffImmune[BuffID.Gravitation] = true;
             }
-            if ((vb & VanillaBuffs.Heartreach) != 0)
+            if ((vb & VanillaBuffs.Heartreach) != VanillaBuffs.None)
             {
                 player.lifeMagnet = true;
                 player.buffImmune[BuffID.Heartreach] = true;
             }
-            if ((vb & VanillaBuffs.Hunter) != 0)
+            if ((vb & VanillaBuffs.Hunter) != VanillaBuffs.None)
             {
                 player.detectCreature = true;
                 player.buffImmune[BuffID.Hunter] = true;
             }
-            if ((vb & VanillaBuffs.Inferno) != 0)
+            if ((vb & VanillaBuffs.Inferno) != VanillaBuffs.None)
             {
                 player.inferno = true;
                 Lighting.AddLight((int)player.Center.X >> 4, (int)player.Center.Y >> 4, 0.65f, 0.4f, 0.1f);
@@ -188,47 +193,47 @@ namespace PotPot.Players
                 }
                 base.player.buffImmune[BuffID.Inferno] = true;
             }
-            if ((vb & VanillaBuffs.Invisibility) != 0)
+            if ((vb & VanillaBuffs.Invisibility) != VanillaBuffs.None)
             {
                 player.invis = true;
                 player.buffImmune[BuffID.Invisibility] = true;
             }
-            if ((vb & VanillaBuffs.Ironskin) != 0)
+            if ((vb & VanillaBuffs.Ironskin) != VanillaBuffs.None)
             {
                 player.statDefense += 8;
                 player.buffImmune[BuffID.Ironskin] = true;
             }
-            if ((vb & VanillaBuffs.Lifeforce) != 0)
+            if ((vb & VanillaBuffs.Lifeforce) != VanillaBuffs.None)
             {
                 player.lifeForce = true;
                 player.statLifeMax2 += player.statLifeMax / 5 / 20 * 20;
                 player.buffImmune[BuffID.Lifeforce] = true;
             }
-            if ((vb & VanillaBuffs.Lovestruck) != 0)
+            if ((vb & VanillaBuffs.Lovestruck) != VanillaBuffs.None)
             {
                 player.buffImmune[BuffID.Lovestruck] = true;
             }
-            if ((vb & VanillaBuffs.MagicPower) != 0)
+            if ((vb & VanillaBuffs.MagicPower) != VanillaBuffs.None)
             {
                 player.magicDamage += 0.2f;
                 player.buffImmune[BuffID.MagicPower] = true;
             }
-            if ((vb & VanillaBuffs.ManaRegen) != 0)
+            if ((vb & VanillaBuffs.ManaRegen) != VanillaBuffs.None)
             {
                 player.manaRegenBuff = true;
                 player.buffImmune[BuffID.ManaRegeneration] = true;
             }
-            if ((vb & VanillaBuffs.Mining) != 0)
+            if ((vb & VanillaBuffs.Mining) != VanillaBuffs.None)
             {
                 player.pickSpeed -= 0.25f;
                 player.buffImmune[BuffID.Mining] = true;
             }
-            if ((vb & VanillaBuffs.NightOwl) != 0)
+            if ((vb & VanillaBuffs.NightOwl) != VanillaBuffs.None)
             {
                 player.nightVision = true;
                 player.buffImmune[BuffID.NightOwl] = true;
             }
-            if ((vb & VanillaBuffs.ObsidianSkin) != 0)
+            if ((vb & VanillaBuffs.ObsidianSkin) != VanillaBuffs.None)
             {
                 player.lavaImmune = true;
                 player.fireWalk = true;
@@ -236,7 +241,7 @@ namespace PotPot.Players
                 player.buffImmune[1] = true;
                 player.buffImmune[BuffID.ObsidianSkin] = true;
             }
-            if ((vb & VanillaBuffs.Rage) != 0)
+            if ((vb & VanillaBuffs.Rage) != VanillaBuffs.None)
             {
                 //calamity rogue crit
                 player.meleeCrit += 10;
@@ -249,62 +254,62 @@ namespace PotPot.Players
                 }
                 player.buffImmune[BuffID.Rage] = true;
             }
-            if ((vb & VanillaBuffs.Regeneration) != 0)
+            if ((vb & VanillaBuffs.Regeneration) != VanillaBuffs.None)
             {
                 player.lifeRegen += 4;
                 player.buffImmune[BuffID.Regeneration] = true;
             }
-            if ((vb & VanillaBuffs.Shine) != 0)
+            if ((vb & VanillaBuffs.Shine) != VanillaBuffs.None)
             {
                 Lighting.AddLight((int)base.player.Center.X >> 4, (int)base.player.Center.Y >> 4, 0.8f, 0.95f, 1f);
                 player.buffImmune[BuffID.Shine] = true;
             }
-            if ((vb & VanillaBuffs.Sonar) != 0)
+            if ((vb & VanillaBuffs.Sonar) != VanillaBuffs.None)
             {
                 player.sonarPotion = true;
                 player.buffImmune[BuffID.Sonar] = true;
             }
-            if ((vb & VanillaBuffs.Spelunker) != 0)
+            if ((vb & VanillaBuffs.Spelunker) != VanillaBuffs.None)
             {
                 player.findTreasure = true;
                 player.buffImmune[BuffID.Spelunker] = true;
             }
-            if ((vb & VanillaBuffs.Stinky) != 0)
+            if ((vb & VanillaBuffs.Stinky) != VanillaBuffs.None)
             {
                 player.stinky = true;
                 player.buffImmune[BuffID.Stinky] = true;
             }
-            if ((vb & VanillaBuffs.Summoning) != 0)
+            if ((vb & VanillaBuffs.Summoning) != VanillaBuffs.None)
             {
                 player.maxMinions++;
                 player.buffImmune[BuffID.Summoning] = true;
             }
-            if ((vb & VanillaBuffs.Swiftness) != 0)
+            if ((vb & VanillaBuffs.Swiftness) != VanillaBuffs.None)
             {
                 player.moveSpeed += 0.25f;
                 player.buffImmune[BuffID.Swiftness] = true;
             }
-            if ((vb & VanillaBuffs.Thorns) != 0)
+            if ((vb & VanillaBuffs.Thorns) != VanillaBuffs.None)
             {
                 player.thorns += 0.33f;
                 player.buffImmune[BuffID.Thorns] = true;
             }
-            if ((vb & VanillaBuffs.Titan) != 0)
+            if ((vb & VanillaBuffs.Titan) != VanillaBuffs.None)
             {
                 player.kbBuff = true;
                 player.buffImmune[BuffID.Titan] = true;
             }
-            if ((vb & VanillaBuffs.Warmth) != 0)
+            if ((vb & VanillaBuffs.Warmth) != VanillaBuffs.None)
             {
                 player.resistCold = true;
                 player.buffImmune[BuffID.Warmth] = true;
             }
-            if ((vb & VanillaBuffs.WaterWalking) != 0)
+            if ((vb & VanillaBuffs.WaterWalking) != VanillaBuffs.None)
             {
                 player.waterWalk = true;
                 player.buffImmune[BuffID.WaterWalking] = true;
             }
-            if ((vb & VanillaBuffs.Wrath) != 0)
+            if ((vb & VanillaBuffs.Wrath) != VanillaBuffs.None)
             {
                 player.meleeDamage += 0.1f;
                 player.thrownDamage += 0.1f;
@@ -336,31 +341,30 @@ namespace PotPot.Players
                 player.moveSpeed += 0.2f;
                 player.buffImmune[BuffID.WellFed] = true;
             }
-            if ((vb & VanillaBuffs.FlaskIchor) != 0)
+            if ((vb & VanillaBuffs.FlaskIchor) != VanillaBuffs.None)
             {
                 player.meleeEnchant = 5;
                 player.buffImmune[BuffID.WeaponImbueIchor] = true;
             }
-            if ((vb & VanillaBuffs.Tipsy) != 0)
+            if ((vb & VanillaBuffs.Tipsy) != VanillaBuffs.None)
             {
-                Main.NewText("tipsy");
                 player.statDefense -= 4;
                 player.meleeDamage += 0.1f;
                 player.meleeCrit += 2;
                 player.meleeSpeed += 0.1f;
                 player.buffImmune[BuffID.Tipsy] = true;
             }
-            if ((vb & VanillaBuffs.AmmoBox) != 0)
+            if ((vb & VanillaBuffs.AmmoBox) != VanillaBuffs.None)
             {
                 player.ammoBox = true;
                 player.buffImmune[BuffID.AmmoBox] = true;
             }
-            if ((vb & VanillaBuffs.Bewitched) != 0)
+            if ((vb & VanillaBuffs.Bewitched) != VanillaBuffs.None)
             {
                 player.maxMinions++;
                 player.buffImmune[BuffID.Bewitched] = true;
             }
-            if ((vb & VanillaBuffs.Clairvoyance) != 0)
+            if ((vb & VanillaBuffs.Clairvoyance) != VanillaBuffs.None)
             {
                 player.magicDamage += 0.05f;
                 player.magicCrit += 2;
@@ -368,7 +372,7 @@ namespace PotPot.Players
                 player.manaCost -= 0.02f;
                 player.buffImmune[BuffID.Clairvoyance] = true;
             }
-            if ((vb & VanillaBuffs.Sharpened) != 0)
+            if ((vb & VanillaBuffs.Sharpened) != VanillaBuffs.None)
             {
                 if (player.inventory[player.selectedItem].melee)
                 {
@@ -376,7 +380,7 @@ namespace PotPot.Players
                 }
                 player.buffImmune[159] = true;
             }
-            if ((vb & VanillaBuffs.Campfire) != 0)
+            if ((vb & VanillaBuffs.Campfire) != VanillaBuffs.None)
             {
                 if (Main.myPlayer == player.whoAmI || Main.netMode == NetmodeID.Server)
                 {
@@ -384,7 +388,7 @@ namespace PotPot.Players
                 }
                 player.buffImmune[BuffID.Campfire] = true;
             }
-            if ((vb & VanillaBuffs.HeartLamp) !=0)
+            if ((vb & VanillaBuffs.HeartLamp) != VanillaBuffs.None)
             {
                 if (Main.myPlayer == player.whoAmI || Main.netMode == NetmodeID.Server)
                 {
@@ -392,12 +396,12 @@ namespace PotPot.Players
                 }
                 player.buffImmune[BuffID.HeartLamp] = true;
             }
-            if ((vb & VanillaBuffs.Honey) !=0 )
+            if ((vb & VanillaBuffs.Honey) != VanillaBuffs.None )
             {
                 player.honey = true;
                 player.buffImmune[BuffID.Honey] = true;
             }
-            if ((vb & VanillaBuffs.PeaceCandle) != 0)
+            if ((vb & VanillaBuffs.PeaceCandle) != VanillaBuffs.None)
             {
                 player.ZonePeaceCandle = true;
                 if (Main.myPlayer == player.whoAmI)
@@ -406,7 +410,7 @@ namespace PotPot.Players
                 }
                 player.buffImmune[BuffID.PeaceCandle] = true;
             }
-            if ((vb & VanillaBuffs.StarInBottle) != 0)
+            if ((vb & VanillaBuffs.StarInBottle) != VanillaBuffs.None)
             {
                 if (Main.myPlayer == player.whoAmI || Main.netMode == NetmodeID.Server)
                 {
@@ -415,15 +419,236 @@ namespace PotPot.Players
                 player.manaRegenBonus += 2;
                 player.buffImmune[BuffID.StarInBottle] = true;
             }
-            if ((cb & CalamityBuffs.Tesla) != 0)
+            if (CP != null)
             {
-                PotPot.Instance.RefCalamityPlayer.tesla = true;
-                //TODO make buffimmune
+                if ((cb & CalamityBuffs.AnechoicCoating) != CalamityBuffs.None)
+                {
+                    CP.anechoicCoating = true;
+                    player.buffImmune[(int)CBID.AnechoicCoating] = true;
+                }
+                if ((cb & CalamityBuffs.AstralInjection) != CalamityBuffs.None)
+                {
+                    CP.astralInjection = true;
+                    player.buffImmune[(int)CBID.AstralInjection] = true;
+                }
+                if ((cb & CalamityBuffs.Bounding) != CalamityBuffs.None)
+                {
+                    CP.bounding = true;
+                    player.buffImmune[(int)CBID.Bounding] = true;
+                }
+                if ((cb & CalamityBuffs.CalamitasBrew) != CalamityBuffs.None)
+                {
+                    CP.aWeapon = true;
+                    player.buffImmune[(int)CBID.CalamitasBrew] = true;
+                }
+                if ((cb & CalamityBuffs.Calcium) != CalamityBuffs.None)
+                {
+                    CP.calcium = true;
+                    player.buffImmune[(int)CBID.Calcium] = true;
+                }
+                if ((cb & CalamityBuffs.CeaselessHunger) != CalamityBuffs.None)
+                {
+                    CP.ceaselessHunger = true;
+                    player.buffImmune[(int)CBID.CeaselessHunger] = true;
+                }
+                if ((cb & CalamityBuffs.Crumbling) != CalamityBuffs.None)
+                {
+                    CP.armorCrumbling = true;
+                    player.buffImmune[(int)CBID.Crumbling] = true;
+                }
+                if ((cb & CalamityBuffs.DraconicElixir) != CalamityBuffs.None)
+                {
+                    if (!CP.draconicSurgeCooldown)
+                    {
+                        CP.draconicSurge = true;
+                        player.buffImmune[(int)CBID.DraconicElixir] = true;
+                    }
+                }
+                if ((cb & CalamityBuffs.GravityNormalizer) != CalamityBuffs.None)
+                {
+                    CP.gravityNormalizer = true;
+                    player.buffImmune[(int)CBID.GravityNormalizer] = true;
+                }
+                if ((cb & CalamityBuffs.HolyWrath) != CalamityBuffs.None)
+                {
+                    CP.holyWrath = true;
+                    player.buffImmune[(int)CBID.HolyWrath] = true;
+                }
+                if ((cb & CalamityBuffs.Penumbra) != CalamityBuffs.None)
+                {
+                    CP.penumbra = true;
+                    player.buffImmune[(int)CBID.Penumbra] = true;
+                }
+                if ((cb & CalamityBuffs.Photosynthesis) != CalamityBuffs.None)
+                {
+                    CP.photosynthesis = true;
+                    player.buffImmune[(int)CBID.Photosynthesis] = true;
+                }
+                if ((cb & CalamityBuffs.ProfanedRage) != CalamityBuffs.None)
+                {
+                    CP.profanedRage = true;
+                    player.buffImmune[(int)CBID.ProfanedRage] = true;
+                }
+                if ((cb & CalamityBuffs.Revivify) != CalamityBuffs.None)
+                {
+                    CP.revivify = true;
+                    player.buffImmune[(int)CBID.Revivify] = true;
+                }
+                if ((cb & CalamityBuffs.Shattering) != CalamityBuffs.None)
+                {
+                    //disables crumble
+                    CP.armorShattering = true;
+                    player.buffImmune[(int)CBID.Shattering] = true;
+                }
+                if ((cb & CalamityBuffs.Shadow) != CalamityBuffs.None)
+                {
+                    player.invis = true;
+                    CP.shadow = true;
+                    player.buffImmune[(int)CBID.Shadow] = true;
+                }
+                if ((cb & CalamityBuffs.Soaring) != CalamityBuffs.None)
+                {
+                    CP.soaring = true;
+                    player.buffImmune[(int)CBID.Soaring] = true;
+                }
+                if ((cb & CalamityBuffs.Sulphurskin) != CalamityBuffs.None)
+                {
+                    CP.sulphurskin = true;
+                    player.buffImmune[(int)CBID.Sulphurskin] = true;
+                }
+                if ((cb & CalamityBuffs.Tesla) != CalamityBuffs.None)
+                {
+                    CP.tesla = true;
+                    player.buffImmune[(int)CBID.Tesla] = true;
+                }
+                if ((cb & CalamityBuffs.TitanScale) != CalamityBuffs.None)
+                {
+                    CP.tScale = true;
+                    player.buffImmune[(int)CBID.TitanScale] = true;
+                }
+                if ((cb & CalamityBuffs.Triumph) != CalamityBuffs.None)
+                {
+                    CP.triumph = true;
+                    player.buffImmune[(int)CBID.Triumph] = true;
+                }
+                if ((cb & CalamityBuffs.Zen) != CalamityBuffs.None)
+                {
+                    CP.zen = true;
+                    player.buffImmune[(int)CBID.Zen] = true;
+                }
+                if ((cb & CalamityBuffs.Zerg) != CalamityBuffs.None)
+                {
+                    CP.anechoicCoating = true;
+                    player.buffImmune[(int)CBID.Zerg] = true;
+                }
+                if ((cb & CalamityBuffs.Cadance) != CalamityBuffs.None)
+                {
+                    //disabled regen
+                    //disables lifeforce
+                    CP.cadence = true;
+                    player.buffImmune[(int)CBID.Cadance] = true;
+                }
+                if ((cb & CalamityBuffs.Omniscience) != CalamityBuffs.None)
+                {
+                    CP.omniscience = true;
+                    player.buffImmune[(int)CBID.Omniscience] = true;
+                }
+                if ((cb & CalamityBuffs.YharimsStimulants) != CalamityBuffs.None)
+                {
+                    CP.yPower = true;
+                    player.buffImmune[(int)CBID.YharimsStimulants] = true;
+                }
+                if ((cb & CalamityBuffs.BloodyMary) != CalamityBuffs.None)
+                {
+                    CP.bloodyMary = true;
+                    player.buffImmune[(int)CBID.BloodyMary] = true;
+                }
+                if ((cb & CalamityBuffs.CarribeanRum) != CalamityBuffs.None)
+                {
+                    CP.caribbeanRum = true;
+                    player.buffImmune[(int)CBID.CaribbeanRum] = true;
+                }
+                if ((cb & CalamityBuffs.CinnamonRoll) != CalamityBuffs.None)
+                {
+                    CP.cinnamonRoll = true;
+                    player.buffImmune[(int)CBID.CinnamonRoll] = true;
+                }
+                if ((cb & CalamityBuffs.Everclear) != CalamityBuffs.None)
+                {
+                    CP.everclear = true;
+                    player.buffImmune[(int)CBID.Everclear] = true;
+                }
+                if ((cb & CalamityBuffs.EvergreenGin) != CalamityBuffs.None)
+                {
+                    CP.evergreenGin = true;
+                    player.buffImmune[(int)CBID.EvergreenGin] = true;
+                }
+                if ((cb & CalamityBuffs.FabsolsVodka) != CalamityBuffs.None)
+                {
+                    CP.fabsolVodka = true;
+                    player.buffImmune[(int)CBID.FabsolsVodka] = true;
+                }
+                if ((cb & CalamityBuffs.Fireball) != CalamityBuffs.None)
+                {
+                    CP.fireball = true;
+                    player.buffImmune[(int)CBID.Fireball] = true;
+                }
+                if ((cb & CalamityBuffs.Moonshine) != CalamityBuffs.None)
+                {
+                    CP.moonshine = true;
+                    player.buffImmune[(int)CBID.Moonshine] = true;
+                }
+                if ((cb & CalamityBuffs.MoscowMule) != CalamityBuffs.None)
+                {
+                    CP.moscowMule = true;
+                    player.buffImmune[(int)CBID.MoscowMule] = true;
+                }
+                if ((cb & CalamityBuffs.Rum) != CalamityBuffs.None)
+                {
+                    CP.rum = true;
+                    player.buffImmune[(int)CBID.Rum] = true;
+                }
+                if ((cb & CalamityBuffs.Screwdriver) != CalamityBuffs.None)
+                {
+                    CP.rum = true;
+                    player.buffImmune[(int)CBID.Screwdriver] = true;
+                }
+                if ((cb & CalamityBuffs.StarBeamRye) != CalamityBuffs.None)
+                {
+                    CP.starBeamRye = true;
+                    player.buffImmune[(int)CBID.StarBeamRye] = true;
+                }
+                if ((cb & CalamityBuffs.Tequila) != CalamityBuffs.None)
+                {
+                    CP.tequila = true;
+                    player.buffImmune[(int)CBID.Tequila] = true;
+                }
+                if ((cb & CalamityBuffs.TequilaSunrise) != CalamityBuffs.None)
+                {
+                    CP.tequilaSunrise = true;
+                    player.buffImmune[(int)CBID.TequilaSunrise] = true;
+                }
+                if ((cb & CalamityBuffs.Vodka) != CalamityBuffs.None)
+                {
+                    CP.vodka = true;
+                    player.buffImmune[(int)CBID.Vodka] = true;
+                }
+                if ((cb & CalamityBuffs.Whiskey) != CalamityBuffs.None)
+                {
+                    CP.whiskey = true;
+                    player.buffImmune[(int)CBID.Whiskey] = true;
+                }
+                if ((cb & CalamityBuffs.WhiteWine) != CalamityBuffs.None)
+                {
+                    CP.whiteWine = true;
+                    player.buffImmune[(int)CBID.WhiteWine] = true;
+                }
             }
         }
         public void ApplyBuffs(Player player)
         {
             vb = VanillaBuffs.None;
+            cb = CalamityBuffs.None;
             foreach (Item i in this.PotPotContent)
             {
                 switch (i.type)
@@ -593,6 +818,139 @@ namespace PotPot.Players
                     case TIID.StarinaBottle:
                         vb |= VanillaBuffs.StarInBottle;
                         break;
+                    case (int)CIID.BloodyMary:
+                        cb |= CalamityBuffs.BloodyMary;
+                        break;
+                    case (int)CIID.CaribbeanRum:
+                        cb |= CalamityBuffs.CarribeanRum;
+                        break;
+                    case (int)CIID.CinnamonRoll:
+                        cb |= CalamityBuffs.CinnamonRoll;
+                        break;
+                    case (int)CIID.Everclear:
+                        cb |= CalamityBuffs.Everclear;
+                        break;
+                    case (int)CIID.EvergreenGin:
+                        cb |= CalamityBuffs.EvergreenGin;
+                        break;
+                    case (int)CIID.FabsolsVodka:
+                        cb |= CalamityBuffs.FabsolsVodka;
+                        break;
+                    case (int)CIID.Fireball:
+                        cb |= CalamityBuffs.Fireball;
+                        break;
+                    case (int)CIID.Moonshine:
+                        cb |= CalamityBuffs.Moonshine;
+                        break;
+                    case (int)CIID.MoscowMule:
+                        cb |= CalamityBuffs.MoscowMule;
+                        break;
+                    case (int)CIID.Rum:
+                        cb |= CalamityBuffs.Rum;
+                        break;
+                    case (int)CIID.Screwdriver:
+                        cb |= CalamityBuffs.Screwdriver;
+                        break;
+                    case (int)CIID.StarBeamRye:
+                        cb |= CalamityBuffs.StarBeamRye;
+                        break;
+                    case (int)CIID.Tequila:
+                        cb |= CalamityBuffs.Tequila;
+                        break;
+                    case (int)CIID.TequilaSunrise:
+                        cb |= CalamityBuffs.TequilaSunrise;
+                        break;
+                    case (int)CIID.Vodka:
+                        cb |= CalamityBuffs.Vodka;
+                        break;
+                    case (int)CIID.Whiskey:
+                        cb |= CalamityBuffs.Whiskey;
+                        break;
+                    case (int)CIID.WhiteWine:
+                        cb |= CalamityBuffs.WhiteWine;
+                        break;
+                    case (int)CIID.AnechoicCoating:
+                        cb |= CalamityBuffs.AnechoicCoating;
+                        break;
+                    case (int)CIID.AstralInjection:
+                        cb |= CalamityBuffs.AstralInjection;
+                        break;
+                    case (int)CIID.AureusCell:
+                        cb |= CalamityBuffs.AureusCell;
+                        break;
+                    case (int)CIID.BoundingPotion:
+                        cb |= CalamityBuffs.Bounding;
+                        break;
+                    case (int)CIID.CadencePotion:
+                        cb |= CalamityBuffs.Cadance;
+                        break;
+                    case (int)CIID.CalamitasBrew:
+                        cb |= CalamityBuffs.CalamitasBrew;
+                        break;
+                    case (int)CIID.CeaselessHungerPotion:
+                        cb |= CalamityBuffs.CeaselessHunger;
+                        break;
+                    case (int)CIID.CalciumPotion:
+                        cb |= CalamityBuffs.Calcium;
+                        break;
+                    case (int)CIID.CrumblingPotion:
+                        cb |= CalamityBuffs.Crumbling;
+                        break;
+                    case (int)CIID.DraconicElixir:
+                        cb |= CalamityBuffs.DraconicElixir;
+                        break;
+                    case (int)CIID.GravityNormalizerPotion:
+                        cb |= CalamityBuffs.GravityNormalizer;
+                        break;
+                    case (int)CIID.HolyWrathPotion:
+                        // disabled wrath potion
+                        cb |= CalamityBuffs.HolyWrath;
+                        break;
+                    case (int)CIID.PenumbraPotion:
+                        cb |= CalamityBuffs.Penumbra;
+                        break;
+                    case (int)CIID.PhotosynthesisPotion:
+                        cb |= CalamityBuffs.Photosynthesis;
+                        break;
+                    case (int)CIID.PotionofOmniscience:
+                        cb |= CalamityBuffs.Omniscience;
+                        break;
+                    case (int)CIID.ProfanedRagePotion:
+                        cb |= CalamityBuffs.ProfanedRage;
+                        break;
+                    case (int)CIID.RevivifyPotion:
+                        cb |= CalamityBuffs.Revivify;
+                        break;
+                    case (int)CIID.ShadowPotion:
+                        cb |= CalamityBuffs.Shadow;
+                        break;
+                    case (int)CIID.ShatteringPotion:
+                        cb |= CalamityBuffs.Shattering;
+                        break;
+                    case (int)CIID.SoaringPotion:
+                        cb |= CalamityBuffs.Soaring;
+                        break;
+                    case (int)CIID.SulphurskinPotion:
+                        cb |= CalamityBuffs.Sulphurskin;
+                        break;
+                    case (int)CIID.TeslaPotion:
+                        cb |= CalamityBuffs.Tesla;
+                        break;
+                    case (int)CIID.TitanScalePotion:
+                        cb |= CalamityBuffs.TitanScale;
+                        break;
+                    case (int)CIID.TriumphPotion:
+                        cb |= CalamityBuffs.Triumph;
+                        break;
+                    case (int)CIID.YharimsStimulants:
+                        cb |= CalamityBuffs.YharimsStimulants;
+                        break;
+                    case (int)CIID.ZenPotion:
+                        cb |= CalamityBuffs.Zen;
+                        break;
+                    case (int)CIID.ZergPotion:
+                        cb |= CalamityBuffs.Zerg;
+                        break;
                     default:
                         switch(i.buffType)
                         {
@@ -607,9 +965,9 @@ namespace PotPot.Players
                                 {
                                     vb |= VanillaBuffs.Campfire;
                                 }
-                                else
+                                else if (i.Name != "")
                                 {
-                                    Main.NewText("[DEFAULT] " + i);
+                                    Main.NewText(":< [DEFAULT] " + i);
                                 }
                                 break;
                         }
