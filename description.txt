@@ -1,1 +1,7 @@
-PotPot is a pretty cool mod, it does...this. Modify this file with a description of your mod.
+Grants you Vanilla & Calamity potion buffs in a way that does'nt use buffslots.
+
+To use craft a 'PotPot' with a watercandle at a workbench and rightclick to open a UI.
+Place potions inside and close the UI to apply buffs.
+Campfires / Heart Lanterns / etc. also work.
+
+Currently Calamity support is strong and static , meaning a Calamity update might break this mod and it requires Calamity to run.

@@ -1,5 +1,5 @@
 displayName = PotPot
 author = Kirby
-version = 0.8
+version = 0.9
 sortAfter = CalamityMod
-weakReferences = CalamityMod
+modReferences = CalamityMod
