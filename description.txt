@@ -1,4 +1,4 @@
-Grants you Vanilla & Calamity potion buffs in a way that does'nt use buffslots.
+Grants you Vanilla & Calamity potion buffs in a way that doesn't use buffslots.
 
 To use craft a 'PotPot' with bottled water at a workbench and rightclick to open a UI.
 Place potions inside and close the UI to apply buffs.
