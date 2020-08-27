@@ -1,6 +1,6 @@
 Grants you Vanilla & Calamity potion buffs in a way that does'nt use buffslots.
 
-To use craft a 'PotPot' with a watercandle at a workbench and rightclick to open a UI.
+To use craft a 'PotPot' with bottled water at a workbench and rightclick to open a UI.
 Place potions inside and close the UI to apply buffs.
 Campfires / Heart Lanterns / etc. also work.
 You don't need to keep it inventory, it's only used to set your current Potions.

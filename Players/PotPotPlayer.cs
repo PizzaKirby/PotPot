@@ -3,17 +3,15 @@ using Microsoft.Xna.Framework;
 using PotPot.Buffs;
 using PotPot.UI;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using System.Collections.Generic;
-using System;
 using CBID = PotPot.Buffs.CalamityBuffID;
 using CIID = PotPot.Items.CalamityItemID;
 using TIID = Terraria.ID.ItemID;
-using System.Linq;
 
 namespace PotPot.Players
 {
