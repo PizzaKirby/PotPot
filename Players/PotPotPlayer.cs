@@ -580,8 +580,6 @@ namespace PotPot.Players
                 }
                 if ((cb & CalamityBuffs.Cadance) != CalamityBuffs.None)
                 {
-                    //disabled regen
-                    //disables lifeforce
                     CP.cadence = true;
                     player.buffImmune[(int)CBID.Cadance] = true;
                 }
@@ -689,6 +687,7 @@ namespace PotPot.Players
             cb = CalamityBuffs.None;
             foreach (Item i in this.PotPotContent)
             {
+                mod.Logger.Debug("[" + i + "]" + i.buffType);
                 switch (i.type)
                 {
                     case TIID.AmmoReservationPotion:
@@ -919,7 +918,7 @@ namespace PotPot.Players
                     case (int)CIID.BoundingPotion:
                         cb |= CalamityBuffs.Bounding;
                         break;
-                    case (int)CIID.CadencePotion:
+                    case (int)CIID.CadancePotion:
                         cb |= CalamityBuffs.Cadance;
                         break;
                     case (int)CIID.CalamitasBrew:
