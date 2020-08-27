@@ -8,15 +8,18 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using System.Collections.Generic;
+using System;
 using CBID = PotPot.Buffs.CalamityBuffID;
 using CIID = PotPot.Items.CalamityItemID;
 using TIID = Terraria.ID.ItemID;
+using System.Linq;
 
 namespace PotPot.Players
 {
     class PotPotPlayer : ModPlayer
     {
-        public IList<Item> PotPotContent;
+        public List<Item> PotPotContent;
         public VanillaBuffs vb = VanillaBuffs.None;
         public CalamityBuffs cb = CalamityBuffs.None;
         internal CalamityPlayer CP;
@@ -28,10 +31,9 @@ namespace PotPot.Players
 
         public override TagCompound Save()
         {
-            //mod.Logger.Debug("SAVING:[" + PotPotContent + "]");
             return new TagCompound
             {
-                { "potpotcontent", PotPotContent }
+                { "potpotcontent", PotPotContent.ToList() }
             };
         }
 
@@ -44,27 +46,41 @@ namespace PotPot.Players
             }
             if ( PotPot.Instance.Calamity != null )
             {
-                CP = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
+                GetCP();
             }
             
             ApplyBuffs(player);
         }
+
+        private void GetCP()
+        {
+            CP = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
+        }
+
         public override void Load(TagCompound tag)
         {
             if(tag.ContainsKey("potpotcontent"))
             {
-                PotPotContent = tag.GetList<Item>("potpotcontent");
-                //mod.Logger.Debug(PotPotContent);
+                PotPotContent = tag.GetList<Item>("potpotcontent").ToList();
+                PotPotContent.RemoveAll(i => i.type == 3930);
             }
         }
 
         public override void PostUpdateEquips()
         {
             Player player = base.player;
-            Mod calamityMod = ModLoader.GetMod("CalamityMod");
-            //CalamityPlayer calamityPlayer = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
 
-            if ((vb & VanillaBuffs.AmmoReservation ) != VanillaBuffs.None)
+            UpdateVanillaPlayer(player);
+            
+            if ( PotPot.Instance.Calamity != null)
+            {
+                UpdateCalamityPlayer(player);
+            }
+        }
+
+        public void UpdateVanillaPlayer(Player player)
+        {
+            if ((vb & VanillaBuffs.AmmoReservation) != VanillaBuffs.None)
             {
                 player.ammoPotion = true;
                 player.buffImmune[BuffID.AmmoReservation] = true;
@@ -162,7 +178,7 @@ namespace PotPot.Players
                             }
                             if (flag)
                             {
-                               player.ApplyDamageToNPC(nPC, damage, 0f, 0, crit: false);
+                                player.ApplyDamageToNPC(nPC, damage, 0f, 0, crit: false);
                             }
                         }
                     }
@@ -251,10 +267,6 @@ namespace PotPot.Players
                     player.thrownCrit += 10;
                     player.magicCrit += 10;
                     player.rangedCrit += 10;
-                    if (calamityMod != null && CP != null)
-                    {
-                        CP.xRage = true;
-                    }
                     player.buffImmune[BuffID.Rage] = true;
                 }
                 else
@@ -329,17 +341,12 @@ namespace PotPot.Players
                     player.magicDamage += 0.1f;
                     player.rangedDamage += 0.1f;
                     player.minionDamage += 0.1f;
-
-                    if (calamityMod != null || CP != null)
-                    {
-                        CP.xWrath = true;
-                    }
                     player.buffImmune[BuffID.Wrath] = true;
                 }
                 else
                     vb &= ~VanillaBuffs.Wrath;
             }
-            if ((vb & VanillaBuffs.WellFed) !=0)
+            if ((vb & VanillaBuffs.WellFed) != 0)
             {
                 player.wellFed = true;
                 player.statDefense += 2;
@@ -412,7 +419,7 @@ namespace PotPot.Players
                 }
                 player.buffImmune[BuffID.HeartLamp] = true;
             }
-            if ((vb & VanillaBuffs.Honey) != VanillaBuffs.None )
+            if ((vb & VanillaBuffs.Honey) != VanillaBuffs.None)
             {
                 player.honey = true;
                 player.buffImmune[BuffID.Honey] = true;
@@ -435,8 +442,20 @@ namespace PotPot.Players
                 player.manaRegenBonus += 2;
                 player.buffImmune[BuffID.StarInBottle] = true;
             }
+        }
+
+        public void UpdateCalamityPlayer(Player player)
+        {
             if (CP != null)
             {
+                if ((vb & VanillaBuffs.Rage) != VanillaBuffs.None)
+                {
+                    CP.xRage = true;
+                }
+                if ((vb & VanillaBuffs.Wrath) != VanillaBuffs.None)
+                {
+                    CP.xWrath = true;
+                }
                 if ((cb & CalamityBuffs.AnechoicCoating) != CalamityBuffs.None)
                 {
                     CP.anechoicCoating = true;
@@ -665,6 +684,7 @@ namespace PotPot.Players
                 }
             }
         }
+
         public void ApplyBuffs(Player player)
         {
             vb = VanillaBuffs.None;

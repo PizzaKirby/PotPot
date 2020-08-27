@@ -3,5 +3,12 @@ Grants you Vanilla & Calamity potion buffs in a way that does'nt use buffslots.
 To use craft a 'PotPot' with a watercandle at a workbench and rightclick to open a UI.
 Place potions inside and close the UI to apply buffs.
 Campfires / Heart Lanterns / etc. also work.
+You don't need to keep it inventory, it's only used to set your current Potions.
+Currently has 49 Slots.
 
-Currently Calamity support is strong and static , meaning a Calamity update might break this mod and it requires Calamity to run.
+If you load into a World and have items from anothermod inside a PotPot which is no longer enabled these items will be deleted.
+Internal Cooldowns like in the Draconic Elixir also work correctly.
+Potion Interactions between Vanilla and Calamity are also included, like ProfaneRage Potion disabling Vanilla Rage or Well Fed being buffed by a Lore item.
+
+A Calamity Update will break the interop if Buff or Item ID's are changed.
+If you have issues , suggestions or want to contribute go to PotPot's GitHub page.
