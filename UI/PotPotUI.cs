@@ -1,13 +1,11 @@
-﻿using IL.Terraria.ID;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using PotPot.Players;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
-using TIID = Terraria.ID.ItemID;
 using Terraria.UI;
-using System.Linq;
+using TIID = Terraria.ID.ItemID;
 
 namespace PotPot.UI
 {

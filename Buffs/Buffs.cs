@@ -113,6 +113,13 @@ namespace PotPot.Buffs
         Whiskey = 1L << 42,
         WhiteWine = 1L << 43,
         AureusCell = 1L << 44,
+        DraconicSurgeCD = 1L << 45,
+        BlueCandle = 1L << 46, // blueCandle | BlueSpeedCandle
+        PinkCandle = 1L << 47, // pinkCandle | PinkHealthCandle
+        PurpleCandle = 1L << 48, // purpleCandle | PurpleDefenseCandle
+        YellowCandle = 1L << 49, // yellowCandle | YellowDamageCandle
+        OddMushroom = 1L << 50, // Trippy 
+        BrimstoneLore = 1L << 51
     }
 
     enum CalamityBuffID : int
@@ -164,5 +171,3 @@ namespace PotPot.Buffs
         Zerg = 340
     }
 }
-
-

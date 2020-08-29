@@ -12,6 +12,11 @@ using Terraria.ModLoader.IO;
 using CBID = PotPot.Buffs.CalamityBuffID;
 using CIID = PotPot.Items.CalamityItemID;
 using TIID = Terraria.ID.ItemID;
+using CalamityMod;
+using CalamityMod.Buffs.Cooldowns;
+using System;
+using CalamityMod.Buffs.StatBuffs;
+using CalamityMod.Buffs.Potions;
 
 namespace PotPot.Players
 {
@@ -50,6 +55,11 @@ namespace PotPot.Players
             ApplyBuffs(player);
         }
 
+        public override void PlayerDisconnect(Player player)
+        {
+            PotPot.Instance.MainUI.Deactivate();
+        }
+
         private void GetCP()
         {
             CP = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
@@ -74,6 +84,65 @@ namespace PotPot.Players
             {
                 UpdateCalamityPlayer(player);
             }
+        }
+
+        public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+        {
+            if( PotPot.Instance.Calamity != null)
+            {
+                bool retVal = true;
+
+                retVal = CalamityPreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
+               
+                return retVal;
+            }
+            //draconic elixir buff
+            return true;
+        }
+
+        public bool CalamityPreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
+        {
+            if ( CP != null)
+            {
+                if( CP.godSlayer && !CP.godSlayerCooldown)
+                {
+                    if(CP.draconicSurge)
+                    {
+                        player.AddBuff(PotPot.Instance.Calamity.BuffType("DraconicSurgeCooldown"), 120, true);
+                        int additionalTime = 0;
+                        for (int i = 0; i < Player.MaxBuffs; i++)
+                        {
+                            if (player.buffType[i] == BuffID.PotionSickness)
+                            {
+                                additionalTime = player.buffTime[i];
+                                break;
+                            }
+                        }
+                        float potionSicknessTime = 30.0f + (float)Math.Ceiling((double)additionalTime / 60.0);
+                        //float potionSicknessTime = player.pStone ? additionalTime * 0.75f: additionalTime;
+                        player.AddBuff(BuffID.PotionSickness,CalamityUtils.SecondsToFrames(potionSicknessTime), true);
+                    }
+                }
+                if (CP.silvaSet && CP.silvaCountdown > 0)
+                {
+                    if (CP.draconicSurge && !CP.draconicSurgeCooldown)
+                    {
+                        player.AddBuff(ModContent.BuffType<DraconicSurgeCooldown>(), CalamityUtils.SecondsToFrames(60f), true);
+                        int additionalTime = 0;
+                        for (int n = 0; n < Player.MaxBuffs; n++)
+                        {
+                            if (player.buffType[n] == BuffID.PotionSickness)
+                            {
+                                additionalTime = player.buffTime[n];
+                                break;
+                            }
+                        }
+                        float potionSicknessTime = 30f + (float)Math.Ceiling((double)additionalTime / 60.0);
+                        player.AddBuff(BuffID.PotionSickness, CalamityUtils.SecondsToFrames(potionSicknessTime), true);
+                     }   
+                }
+            }
+            return true;
         }
 
         public void UpdateVanillaPlayer(Player player)
@@ -446,6 +515,7 @@ namespace PotPot.Players
         {
             if (CP != null)
             {
+                #region Potions
                 if ((vb & VanillaBuffs.Rage) != VanillaBuffs.None)
                 {
                     CP.xRage = true;
@@ -678,6 +748,35 @@ namespace PotPot.Players
                     CP.whiteWine = true;
                     player.buffImmune[(int)CBID.WhiteWine] = true;
                 }
+                #endregion Potions
+                #region LoreItems
+                if ((cb & CalamityBuffs.BrimstoneLore) !=  CalamityBuffs.None)
+                {
+                    if ((CP.brimstoneElementalLore || CP.ataxiaBlaze) && ((vb & VanillaBuffs.Inferno) != VanillaBuffs.None))
+                    {
+                        //DEBUG
+                        Main.NewText("Brimferno");
+                        CP.brimLoreInfernoTimer = (CP.brimLoreInfernoTimer + 1) % 30;
+                        if (player.whoAmI == Main.myPlayer)
+                        {
+                            int damage = (int)(50f * CalamityUtils.AverageDamage(player));
+                            float range = 300f;
+                            for (int l = 0; l < 200; l++)
+                            {
+                                NPC npc = Main.npc[l];
+                                if (npc.active && !npc.friendly && npc.damage > 0 && !npc.dontTakeDamage && Vector2.Distance(player.Center, npc.Center) <= range)
+                                {
+                                    npc.AddBuff(PotPot.Instance.Calamity.BuffType("BrimstoneFlames"), 120, false);
+                                    if (CP.brimLoreInfernoTimer == 0)
+                                    {
+                                        Projectile.NewProjectileDirect(npc.Center, Vector2.Zero, ModContent.ProjectileType<CalamityMod.Projectiles.Typeless.DirectStrike>(), damage, 0f, player.whoAmI, (float)l, 0f);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                #endregion LoreItems
             }
         }
 
