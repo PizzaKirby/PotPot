@@ -21,7 +21,7 @@ namespace PotPot.Items
             item.rare = 13;
             item.UseSound = SoundID.Item3;
             item.buffType = mod.BuffType("PotPotDummyBuff");
-            item.buffTime = 0;
+            item.buffTime = 1;
             item.expert = true;
         }
         public override void AddRecipes()
