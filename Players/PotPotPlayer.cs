@@ -750,6 +750,7 @@ namespace PotPot.Players
                 }
                 #endregion Potions
                 #region LoreItems
+                /*
                 if ((cb & CalamityBuffs.BrimstoneLore) !=  CalamityBuffs.None)
                 {
                     if ((CP.brimstoneElementalLore || CP.ataxiaBlaze) && ((vb & VanillaBuffs.Inferno) != VanillaBuffs.None))
@@ -776,6 +777,7 @@ namespace PotPot.Players
                         }
                     }
                 }
+                */
                 #endregion LoreItems
             }
         }
@@ -1103,7 +1105,7 @@ namespace PotPot.Players
                                 }
                                 else if (i.Name != "")
                                 {
-                                    Main.NewText(":< [DEFAULT] " + i);
+                                    Main.NewText("[DEFAULT] " + i + " + shouldn't be here");
                                 }
                                 break;
                         }
