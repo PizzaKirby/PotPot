@@ -1,7 +1,10 @@
-﻿using CalamityMod.CalPlayer;
+﻿using CalamityMod;
+using CalamityMod.Buffs.Cooldowns;
+using CalamityMod.CalPlayer;
 using Microsoft.Xna.Framework;
 using PotPot.Buffs;
 using PotPot.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -12,11 +15,6 @@ using Terraria.ModLoader.IO;
 using CBID = PotPot.Buffs.CalamityBuffID;
 using CIID = PotPot.Items.CalamityItemID;
 using TIID = Terraria.ID.ItemID;
-using CalamityMod;
-using CalamityMod.Buffs.Cooldowns;
-using System;
-using CalamityMod.Buffs.StatBuffs;
-using CalamityMod.Buffs.Potions;
 
 namespace PotPot.Players
 {
@@ -753,6 +751,7 @@ namespace PotPot.Players
                 /*
                 if ((cb & CalamityBuffs.BrimstoneLore) !=  CalamityBuffs.None)
                 {
+                    CP.brimstoneElementalLore = true;
                     if ((CP.brimstoneElementalLore || CP.ataxiaBlaze) && ((vb & VanillaBuffs.Inferno) != VanillaBuffs.None))
                     {
                         //DEBUG
@@ -786,11 +785,13 @@ namespace PotPot.Players
         {
             vb = VanillaBuffs.None;
             cb = CalamityBuffs.None;
+
             foreach (Item i in this.PotPotContent)
             {
-                mod.Logger.Debug("[" + i + "]" + i.buffType);
                 switch (i.type)
                 {
+                    //using CalamityMod.Items.Potions;
+                    //PotPot.Instance.Calamity.ItemType("DraconicElixir");
                     case TIID.AmmoReservationPotion:
                         vb |= VanillaBuffs.AmmoReservation;
                         break;
@@ -1041,7 +1042,6 @@ namespace PotPot.Players
                         cb |= CalamityBuffs.GravityNormalizer;
                         break;
                     case (int)CIID.HolyWrathPotion:
-                        // disabled wrath potion
                         cb |= CalamityBuffs.HolyWrath;
                         break;
                     case (int)CIID.PenumbraPotion:
@@ -1088,6 +1088,9 @@ namespace PotPot.Players
                         break;
                     case (int)CIID.ZergPotion:
                         cb |= CalamityBuffs.Zerg;
+                        break;
+                    case (int)CIID.BrimstoneElementalLore:
+                        cb |= CalamityBuffs.BrimstoneLore;
                         break;
                     default:
                         switch(i.buffType)

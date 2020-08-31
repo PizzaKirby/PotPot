@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 using TIID = Terraria.ID.ItemID;
+using PotPot.Items;
 
 namespace PotPot.UI
 {
@@ -26,7 +27,9 @@ namespace PotPot.UI
                 TIID.HeartLantern, 
                 TIID.BottledHoney, 
                 TIID.PeaceCandle, 
-                TIID.WaterCandle
+                TIID.WaterCandle,
+                (int)CalamityItemID.BrimstoneElementalLore,
+
             };
         }
 

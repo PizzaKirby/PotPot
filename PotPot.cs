@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using PotPot.UI;
 using System.Collections.Generic;
+using CalamityMod.Items.Potions;
 
 namespace PotPot
 {
@@ -25,7 +26,6 @@ namespace PotPot
         public override void Load()
         {
             Logger.InfoFormat("{0} loading", Name);
-
             if (!Main.dedServ)
             {
                 PotPotInterface = new UserInterface();

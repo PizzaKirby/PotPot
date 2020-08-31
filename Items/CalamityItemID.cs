@@ -46,5 +46,6 @@
         YharimsStimulants = 5281,
         ZenPotion = 5282,
         ZergPotion = 5283,
+        BrimstoneElementalLore = 4454,
     }
 }

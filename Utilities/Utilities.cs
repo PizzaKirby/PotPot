@@ -7,14 +7,8 @@ namespace PotPot.Utilities
 {
     struct Utilities
     {
-        static IEnumerable<VanillaBuffs> GetFlags(VanillaBuffs input)
-        {
-            foreach (VanillaBuffs value in Enum.GetValues(input.GetType()))
-                if (input.HasFlag(value))
-                {
-                    Main.NewText(value);
-                    yield return value;
-                }
-        }
+        //Dictionary<string, int> dict = new Dictionary<string, int>();
+        //dict.Add("CrumblingPotion", PotPot.Instance.Calamity.ItemType("DraconicElixir"));
+        //Main.NewText(dict["CrumblingPotion"]);
     }
 }
