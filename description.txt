@@ -26,7 +26,7 @@ Recent Updates
 ==============
 
 -> Draconic Elixir interaction with GodSlayer/Silva armor now works correctly
-
+-> Added debug command '/PotPot <Items/Buffs>'
 
 ================
 Planned Features
