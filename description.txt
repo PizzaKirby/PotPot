@@ -4,7 +4,7 @@ Info
 
 Grants you Vanilla & Calamity potion buffs in a way that doesn't use buffslots.
 One might ask 'Why?'
-The answeser is rather simple, all buffs and debuffs share the same 20 slots, which depending on the class and/or mods you play is nowhere near enough.
+The answer is rather simple, all buffs and debuffs share the same 20 slots, which depending on the class and/or mods you play, is nowhere near enough.
 Also saves inventory space ¯\_(ツ)_/¯.
 
 To use craft a 'PotPot' with bottled water at a workbench and rightclick to open a UI.
