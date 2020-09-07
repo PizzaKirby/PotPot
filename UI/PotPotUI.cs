@@ -14,23 +14,9 @@ namespace PotPot.UI
     {
         private readonly List<PotPotItemSlot> potInv;
         private readonly int SLOTCOUNT = 49;
-        private readonly int[] ITEMWHITELIST;
         public PotPotUI()
         {
             potInv = new List<PotPotItemSlot>();
-            ITEMWHITELIST = new int[] { 
-                TIID.AmmoBox, 
-                TIID.BewitchingTable, 
-                TIID.CrystalBall, 
-                TIID.SharpeningStation, 
-                TIID.Campfire, 
-                TIID.HeartLantern, 
-                TIID.BottledHoney, 
-                TIID.PeaceCandle, 
-                TIID.WaterCandle,
-                (int)CalamityItemID.BrimstoneElementalLore,
-
-            };
         }
 
         public override void OnInitialize()
@@ -87,11 +73,11 @@ namespace PotPot.UI
         private bool IsValidItem(Item newItem, Item currentItem)
         {
 
-            if ( newItem.buffType != 0 || newItem.Name == "")
+            if (newItem.buffType != 0 || newItem.Name == "")
             {
                 return true;
             }
-            else if (Array.Exists(ITEMWHITELIST, element => element.Equals(newItem.type)) || newItem.Name.Contains("Campfire"))
+            else if (PotPot.Instance.IsRegisteredItem(newItem.type) || newItem.Name.Contains("Campfire")) // TODO check new whitelist here
             {
                 return true;
             }

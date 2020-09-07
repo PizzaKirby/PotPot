@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IL.Terraria.ID;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Policy;
@@ -8,53 +9,16 @@ using Terraria.ModLoader;
 
 namespace PotPot.Calamity
 {
-    public sealed class CalamityID
+    public static class CalamityID
     {
-        private static CalamityID instance = null;
-        private static readonly object padlock = new object();
-        private Dictionary<string, int> Item;
-        private Dictionary<string, int> Buff;
-        private CalamityID()
-        {
+        public static int Item(string itemname)
+        { 
+            return PotPot.Instance.Calamity.ItemType(itemname);
         }
 
-        public void AddItem(ModItem item)
+        public static int Buff(string buffname)
         {
-            Item.Add(item.Name, PotPot.Instance.Calamity.ItemType(item.Name));
+            return PotPot.Instance.Calamity.BuffType(buffname);
         }
-
-        public void AddBuff(ModBuff buff)
-        {
-            Buff.Add(buff.Name, PotPot.Instance.Calamity.BuffType(buff.Name));
-        }
-
-        public int GetBID(string buffname)
-        {
-            if (Buff.TryGetValue(buffname, out int retval))
-                return retval;
-            return -1;
-        }
-
-        public int GetIID(string itemname)
-        {
-            if(Item.TryGetValue(itemname, out int retval))
-                return retval;
-            return -1;
-        }
-
-        public static CalamityID Instance
-        {
-            get
-            {
-                lock (padlock)
-                {
-                    if (instance == null)
-                    {
-                        instance = new CalamityID();
-                    }
-                    return instance;
-                }
-            }
-        }  
     }
 }

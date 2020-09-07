@@ -40,16 +40,16 @@ namespace PotPot.Commands
 
                 case "buffs":
                     Main.NewText("Vanilla Buffs :");
-                    Main.NewText(modPlayer.vb);
+                    //Main.NewText(modPlayer.vb);
                     mod.Logger.Info("Vanilla Buffs :");
-                    mod.Logger.Info(modPlayer.vb);
+                   // mod.Logger.Info(modPlayer.vb);
 
                     if ( PotPot.Instance.Calamity != null )
                     {
                         Main.NewText("Calamity Buffs :");
-                        Main.NewText(modPlayer.cb);
+                        //Main.NewText(modPlayer.cb);
                         mod.Logger.Info("Calamity Buffs :");
-                        mod.Logger.Info(modPlayer.cb);
+                        //mod.Logger.Info(modPlayer.cb);
                     }
                     break;
             }
