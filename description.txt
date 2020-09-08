@@ -33,6 +33,7 @@ Recent Updates
 -> Rewritten some of the inner workings making adding support for other items way easier & faster
 -> Added debug command '/PotPot <Items/Buffs>'
 -> Added Calamity Lore Item support
+-> Added Calamity Candle support
 
 ================
 Planned Features

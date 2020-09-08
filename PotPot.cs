@@ -857,6 +857,25 @@ namespace PotPot
             });
 
             #endregion Lore
+            #region Furniture
+
+            RegisterCallback(CalamityID.Item("BlueCandle"), (PPP) =>
+            {
+                PPP.CP.blueCandle = true;
+                Main.LocalPlayer.buffImmune[CalamityID.Buff("BlueSpeedCandle")] = true;
+            });
+            RegisterCallback(CalamityID.Item("PinkCandle"), (PPP) =>
+            {
+                PPP.CP.pinkCandle = true;
+                Main.LocalPlayer.buffImmune[CalamityID.Buff("PinkHealthCandle")] = true;
+            });
+            RegisterCallback(CalamityID.Item("PurpleCandle"), (PPP) =>
+            {
+                PPP.CP.purpleCandle = true;
+                Main.LocalPlayer.buffImmune[CalamityID.Buff("PurpleDefenseCandle")] = true;
+            });
+
+            #endregion Furniture
         }
 
         public override void UpdateUI(GameTime gameTime)
