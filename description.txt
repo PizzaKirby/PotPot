@@ -17,7 +17,8 @@ If you load into a World and have items from anothermod inside a PotPot which is
 Internal Cooldowns like in the Draconic Elixir also work correctly.
 Potion Interactions between Vanilla and Calamity are also included, like ProfaneRage Potion disabling Vanilla Rage or Well Fed being buffed by a Lore item.
 
-A Calamity Update will break the interop if Buff or Item ID's are changed.
+This mod should be less prone to break after a Calamity update now.
+
 If you have issues , suggestions or want to contribute go to PotPot's GitHub page.
 
 
@@ -25,8 +26,9 @@ If you have issues , suggestions or want to contribute go to PotPot's GitHub pag
 Recent Updates
 ==============
 
--> Draconic Elixir interaction with GodSlayer/Silva armor now works correctly
+-> Rewritten some of the inner workings making adding support for other items way easier & faster
 -> Added debug command '/PotPot <Items/Buffs>'
+-> Added Calamity Lore Item support
 
 ================
 Planned Features
@@ -34,5 +36,4 @@ Planned Features
 -> Remove Inferno & Tesla Pot Visual 
 -> Dynamic UI
 -> Toggle Potion Effects
--> Calamity Lore Items
 -> Thorium Potions

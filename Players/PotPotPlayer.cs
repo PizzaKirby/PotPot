@@ -165,10 +165,10 @@ namespace PotPot.Players
 
             if (Buffs.Contains(CalamityID.Item("CadencePotion")))
             {
-                if (Buffs.Contains(BuffID.Lifeforce))
-                    Buffs.Remove(BuffID.Lifeforce);
-                if (Buffs.Contains(BuffID.Regeneration))
-                    Buffs.Remove(BuffID.Regeneration);
+                if (Buffs.Contains(ItemID.LifeforcePotion))
+                    Buffs.Remove(ItemID.LifeforcePotion);
+                if (Buffs.Contains(ItemID.RegenerationPotion))
+                    Buffs.Remove(ItemID.RegenerationPotion);
             }
             if (Buffs.Contains(CalamityID.Item("ShatteringPotion")))
             {
