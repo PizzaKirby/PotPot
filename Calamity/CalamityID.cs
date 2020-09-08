@@ -3,13 +3,17 @@
     public static class CalamityID
     {
         public static int Item(string itemname)
-        { 
-            return PotPot.Instance.Calamity.ItemType(itemname);
+        {
+            if(PotPot.Instance.Calamity != null)
+                return PotPot.Instance.Calamity.ItemType(itemname);
+            return 0;
         }
 
         public static int Buff(string buffname)
         {
-            return PotPot.Instance.Calamity.BuffType(buffname);
+            if (PotPot.Instance.Calamity != null)
+                return PotPot.Instance.Calamity.BuffType(buffname);
+            return 0;
         }
     }
 }

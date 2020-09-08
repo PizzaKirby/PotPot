@@ -13,6 +13,10 @@ Campfires / Heart Lanterns / etc. also work.
 You don't need to keep it inventory, it's only used to set your current Potions.
 Currently has 49 Slots.
 
+Anything with 'Campfire' in it's name grants the campfire buff.
+Anything that gives Well Fed on consumption grants the well fed buff.
+In the debug command these show up as 'Campfire' and 'Sashimi' respectively.
+
 If you load into a World and have items from anothermod inside a PotPot which is no longer enabled these items will be deleted.
 Internal Cooldowns like in the Draconic Elixir also work correctly.
 Potion Interactions between Vanilla and Calamity are also included, like ProfaneRage Potion disabling Vanilla Rage or Well Fed being buffed by a Lore item.

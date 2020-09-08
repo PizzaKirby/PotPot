@@ -43,7 +43,9 @@ namespace PotPot
             RegisterVanillaBuffCallbacks();
 
             if (this.Calamity != null)
-                SetupCalamityInterop();   
+            {
+                SetupCalamityInterop();
+            }
         }
 
         internal bool IsRegisteredItem(int itemtype)

@@ -1,6 +1,6 @@
 displayName = PotPot
 author = Kirby
-version = 1.2.0.0
+version = 1.1.0.0
 weakReferences = CalamityMod@1.4.5.2
 loadAfter = CalamityMod,Thorium
 homepage = https://github.com/PizzaKirby/PotPot
