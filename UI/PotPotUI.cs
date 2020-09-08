@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
+using TIID = Terraria.ID.ItemID;
+using PotPot.Items;
 
 namespace PotPot.UI
 {
@@ -12,9 +14,23 @@ namespace PotPot.UI
     {
         private readonly List<PotPotItemSlot> potInv;
         private readonly int SLOTCOUNT = 49;
+        private readonly int[] ITEMWHITELIST;
         public PotPotUI()
         {
             potInv = new List<PotPotItemSlot>();
+            ITEMWHITELIST = new int[] { 
+                TIID.AmmoBox, 
+                TIID.BewitchingTable, 
+                TIID.CrystalBall, 
+                TIID.SharpeningStation, 
+                TIID.Campfire, 
+                TIID.HeartLantern, 
+                TIID.BottledHoney, 
+                TIID.PeaceCandle, 
+                TIID.WaterCandle,
+                (int)CalamityItemID.BrimstoneElementalLore,
+
+            };
         }
 
         public override void OnInitialize()
@@ -22,7 +38,7 @@ namespace PotPot.UI
             PotPotDraggablePanel panel = new PotPotDraggablePanel();
             panel.Width.Set(Main.inventoryBackTexture.Width * 8f, 0);
             panel.Height.Set(Main.inventoryBackTexture.Height * 8f, 0);
-            panel.Top.Set(560, 0);
+            panel.Top.Set(500, 0);
             panel.Left.Set(500, 0);
             Append(panel);
 
@@ -71,11 +87,11 @@ namespace PotPot.UI
         private bool IsValidItem(Item newItem, Item currentItem)
         {
 
-            if (newItem.buffType != 0 || newItem.Name == "")
+            if ( newItem.buffType != 0 || newItem.Name == "")
             {
                 return true;
             }
-            else if (PotPot.Instance.IsRegisteredItem(newItem.type) || newItem.Name.Contains("Campfire")) // TODO check new whitelist here
+            else if (Array.Exists(ITEMWHITELIST, element => element.Equals(newItem.type)) || newItem.Name.Contains("Campfire"))
             {
                 return true;
             }

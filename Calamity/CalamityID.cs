@@ -1,19 +1,45 @@
-﻿namespace PotPot.Calamity
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Policy;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PotPot.Calamity
 {
-    public static class CalamityID
+    public sealed class CalamityID
     {
-        public static int Item(string itemname)
+        private static CalamityID instance = null;
+        private static readonly object padlock = new object();
+        private Dictionary<string, int> Item;
+        private Dictionary<string, int> Buff;
+        private CalamityID()
         {
-            if(PotPot.Instance.Calamity != null)
-                return PotPot.Instance.Calamity.ItemType(itemname);
-            return 0;
         }
 
-        public static int Buff(string buffname)
+        public void InitItems()
         {
-            if (PotPot.Instance.Calamity != null)
-                return PotPot.Instance.Calamity.BuffType(buffname);
-            return 0;
+
         }
+
+        public void InitBuffs()
+        {
+
+        }
+
+        public static CalamityID Instance
+        {
+            get
+            {
+                lock (padlock)
+                {
+                    if (instance == null)
+                    {
+                        instance = new CalamityID();
+                    }
+                    return instance;
+                }
+            }
+        }  
     }
 }
