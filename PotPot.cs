@@ -10,6 +10,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
+using CalamityMod.CalPlayer;
 
 namespace PotPot
 {
@@ -677,10 +678,182 @@ namespace PotPot
             #endregion Alcohol
             #region Lore
 
+            RegisterCallback(CalamityID.Item("KnowledgeAquaticScourge"), (PPP) =>
+            {
+                PPP.CP.aquaticScourgeLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeAstrumAureus"), (PPP) =>
+            {
+                PPP.CP.astrumAureusLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeAstrumDeus"), (PPP) =>
+            {
+                PPP.CP.astrumDeusLore = true;
+            });
             RegisterCallback(CalamityID.Item("KnowledgeBrimstoneElemental"), (PPP) =>
             {
                 PPP.CP.brimstoneElementalLore = true;
             });
+            RegisterCallback(CalamityID.Item("KnowledgeCalamitas"), (PPP) =>
+            {
+                PPP.CP.SCalLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeCalamitasClone"), (PPP) =>
+            {
+                PPP.CP.calamitasLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeCorruption"), (PPP) =>
+            {
+                PPP.CP.corruptionLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeCrabulon"), (PPP) =>
+            {
+                PPP.CP.crabulonLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeCrimson"), (PPP) =>
+            {
+                PPP.CP.crimsonLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeCryogen"), (PPP) =>
+            {
+                PPP.CP.dashMod = 6;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeDesertScourge"), (PPP) =>
+            {
+                PPP.CP.desertScourgeLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeDestroyer"), (PPP) =>
+            {
+                PPP.CP.destroyerLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeDevourerofGods"), (PPP) =>
+            {
+                PPP.CP.DoGLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeDukeFishron"), (PPP) =>
+            {
+                PPP.CP.dukeFishronLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeEaterofWorlds"), (PPP) =>
+            {
+                PPP.CP.eaterOfWorldsLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeEyeofCthulhu"), (PPP) =>
+            {
+                if (!Main.dayTime)
+                {
+                    Main.LocalPlayer.nightVision = true;
+                    return;
+                }
+                Main.LocalPlayer.blind = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeGolem"), (PPP) =>
+            {
+                PPP.CP.golemLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeHiveMind"), (PPP) =>
+            {
+                if (Main.LocalPlayer.ZoneCorrupt)
+                    PPP.CP.hiveMindLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeKingSlime"), (PPP) =>
+            {
+                PPP.CP.kingSlimeLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeLeviathanandSiren"), (PPP) =>
+            {
+                PPP.CP.leviathanAndSirenLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeLunaticCultist"), (PPP) =>
+            {
+                if(NPC.LunarApocalypseIsUp)
+                    PPP.CP.lunaticCultistLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeMoonLord"), (PPP) =>
+            {
+                PPP.CP.moonLordLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeOcean"), (PPP) =>
+            {
+                PPP.CP.oceanLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeOldDuke"), (PPP) =>
+            {
+                PPP.CP.boomerDukeLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgePerforators"), (PPP) =>
+            {
+                if(Main.LocalPlayer.ZoneCrimson)
+                    PPP.CP.perforatorLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgePlaguebringerGoliath"), (PPP) =>
+            {
+                PPP.CP.plaguebringerGoliathLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgePlantera"), (PPP) =>
+            {
+                PPP.CP.planteraLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgePolterghast"), (PPP) =>
+            {
+                PPP.CP.polterghastLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeProvidence"), (PPP) =>
+            {
+                PPP.CP.providenceLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeQueenBee"), (PPP) =>
+            {
+                PPP.CP.queenBeeLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeRavager"), (PPP) =>
+            {
+                PPP.CP.ravagerLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeSkeletron"), (PPP) =>
+            {
+                if(Main.LocalPlayer.ZoneDungeon)
+                    PPP.CP.skeletronLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeSkeletronPrime"), (PPP) =>
+            {
+                PPP.CP.skeletronLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeSlimeGod"), (PPP) =>
+            {
+                if (Main.LocalPlayer.mount.Active || PPP.CP.slimeGodLoreProcessed)
+                {
+                    return;
+                }
+                PPP.CP.slimeGodLoreProcessed = true;
+                if (Main.LocalPlayer.dashDelay < 0 || (Main.LocalPlayer.velocity.Length() >= 11f && CalamityPlayer.areThereAnyDamnBosses))
+                {
+                    Main.LocalPlayer.velocity.X = Main.LocalPlayer.velocity.X * 0.9f;
+                }
+                Main.LocalPlayer.slippy2 = true;
+                if (Main.myPlayer == Main.LocalPlayer.whoAmI)
+                {
+                    Main.LocalPlayer.AddBuff(137, 2, true);
+                }
+                Main.LocalPlayer.statDefense -= 10;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeTwins"), (PPP) =>
+            {
+                PPP.CP.twinsLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeUnderworld"), (PPP) =>
+            {
+                PPP.CP.underworldLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeWallofFlesh"), (PPP) =>
+            {
+                PPP.CP.wallOfFleshLore = true;
+            });
+            RegisterCallback(CalamityID.Item("KnowledgeYharon"), (PPP) =>
+            {
+                PPP.CP.yharonLore = true;
+            });
+
             #endregion Lore
         }
 

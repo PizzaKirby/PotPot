@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
-using TIID = Terraria.ID.ItemID;
-using PotPot.Items;
 
 namespace PotPot.UI
 {
@@ -24,7 +22,7 @@ namespace PotPot.UI
             PotPotDraggablePanel panel = new PotPotDraggablePanel();
             panel.Width.Set(Main.inventoryBackTexture.Width * 8f, 0);
             panel.Height.Set(Main.inventoryBackTexture.Height * 8f, 0);
-            panel.Top.Set(500, 0);
+            panel.Top.Set(560, 0);
             panel.Left.Set(500, 0);
             Append(panel);
 

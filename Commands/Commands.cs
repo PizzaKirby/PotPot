@@ -6,6 +6,9 @@ using System.Collections.Generic;
 using CalamityMod.Items.Potions;
 using Microsoft.VisualBasic;
 using PotPot.Utilities;
+using Steamworks;
+using IL.Terraria.ID;
+using Terraria.ID;
 
 namespace PotPot.Commands
 {
@@ -31,7 +34,7 @@ namespace PotPot.Commands
                         if(i.Name == "")
                             msg += "<Empty>";
                        
-                        Main.NewText(msg, 111, 255, 111);
+                        Main.NewText(msg, 111, 111, 111);
                         mod.Logger.Info(msg);
 
                         j++;
@@ -39,17 +42,17 @@ namespace PotPot.Commands
                     break;
 
                 case "buffs":
-                    Main.NewText("Vanilla Buffs :");
-                    //Main.NewText(modPlayer.vb);
-                    mod.Logger.Info("Vanilla Buffs :");
-                   // mod.Logger.Info(modPlayer.vb);
-
-                    if ( PotPot.Instance.Calamity != null )
+                    foreach(int i in modPlayer.Buffs)
                     {
-                        Main.NewText("Calamity Buffs :");
-                        //Main.NewText(modPlayer.cb);
-                        mod.Logger.Info("Calamity Buffs :");
-                        //mod.Logger.Info(modPlayer.cb);
+                        string msg = "[" + i + "] ";
+
+                        if (ModContent.GetModItem(i) != null)
+                            msg += ModContent.GetModItem(i)?.Name;
+                        else
+                            msg += Lang.GetItemName(i); 
+
+                        Main.NewText(msg, 111, 111, 111);
+                        mod.Logger.Debug(msg);
                     }
                     break;
             }

@@ -1,13 +1,4 @@
-﻿using IL.Terraria.ID;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.ModLoader;
-
-namespace PotPot.Calamity
+﻿namespace PotPot.Calamity
 {
     public static class CalamityID
     {

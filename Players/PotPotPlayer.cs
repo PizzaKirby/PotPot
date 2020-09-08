@@ -76,9 +76,7 @@ namespace PotPot.Players
             foreach(int i in Buffs)
             {
                 if (PotPot.Instance.BuffCallbacks.TryGetValue(i, out Action<PotPotPlayer> action))
-                {
-                    mod.Logger.Debug("Invoking action for " + i);
-                    mod.Logger.Debug(action.ToString());
+                { 
                     action.Invoke(this);
                 }
             }
@@ -149,11 +147,44 @@ namespace PotPot.Players
 
             foreach (Item i in this.PotPotContent)
             {
-                //TODO check for exclusivity here
+                if (i.Name == "")
+                    continue;
+
+                if (i.Name.Contains("Campfire"))
+                {
+                    Buffs.Add(ItemID.Campfire);
+                    continue;
+                }
+                else if (i.buffType == BuffID.WellFed)
+                {
+                    Buffs.Add(ItemID.Sashimi);
+                    continue;
+                }
                 Buffs.Add(i.type);
             }
+
+            if (Buffs.Contains(CalamityID.Item("CadencePotion")))
+            {
+                if (Buffs.Contains(BuffID.Lifeforce))
+                    Buffs.Remove(BuffID.Lifeforce);
+                if (Buffs.Contains(BuffID.Regeneration))
+                    Buffs.Remove(BuffID.Regeneration);
+            }
+            if (Buffs.Contains(CalamityID.Item("ShatteringPotion")))
+            {
+                if (Buffs.Contains(CalamityID.Item("CrumblingPotion")))
+                    Buffs.Remove(CalamityID.Item("CrumblingPotion"));
+            }
+            if (Buffs.Contains(CalamityID.Item("HolyWrathPotion")))
+            {
+                if (Buffs.Contains(ItemID.WrathPotion))
+                    Buffs.Remove(ItemID.WrathPotion);
+            }
+            if (Buffs.Contains(CalamityID.Item("ProfanedRagePotion")))
+            {
+                if (Buffs.Contains(ItemID.RagePotion))
+                    Buffs.Remove(ItemID.RagePotion);
+            }
         }
-
-
     }
 }
