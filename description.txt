@@ -1,4 +1,9 @@
-﻿=====
+﻿! ! !
+The crafting recipe was wrong the whole time and i didn't notice because I'm a big dumbo.
+It's fixed now ( Waterbottle at workbench )
+! ! !
+
+=====
 Info
 =====
 

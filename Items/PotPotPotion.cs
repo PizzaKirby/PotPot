@@ -28,7 +28,7 @@ namespace PotPot.Items
         {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.BottledWater, 1);
-            recipe.AddTile(TileID.Bottles);
+            recipe.AddTile(TileID.WorkBenches);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }
