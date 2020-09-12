@@ -1,8 +1,6 @@
 ﻿using CalamityMod;
-using CalamityMod.Buffs.Cooldowns;
 using CalamityMod.CalPlayer;
-using Microsoft.Xna.Framework;
-using PotPot.Buffs;
+using PotPot.Calamity;
 using PotPot.UI;
 using System;
 using System.Collections.Generic;
@@ -12,8 +10,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using PotPot.Calamity;
-using TIID = Terraria.ID.ItemID;
+using ThoriumMod;
 
 namespace PotPot.Players
 {
@@ -22,6 +19,7 @@ namespace PotPot.Players
         public List<Item> PotPotContent;
         internal List<int> Buffs;
         internal CalamityPlayer CP;
+        internal ThoriumPlayer TP;
  
         public PotPotPlayer()
         {
@@ -39,6 +37,7 @@ namespace PotPot.Players
 
         public override void OnEnterWorld(Player player)
         {
+
             if (!Main.dedServ)
             { 
                 PotPot.Instance.MainUI = new PotPotUI();
@@ -48,18 +47,27 @@ namespace PotPot.Players
             {
                 GetCP();
             }
-            
+            if (PotPot.Instance.Thorium != null)
+            {
+                GetTP();
+            }
             ApplyBuffs(player);
         }
 
         public override void PlayerDisconnect(Player player)
         {
             PotPot.Instance.MainUI = null;
+            Buffs.Clear();
         }
 
         private void GetCP()
         {
             CP = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
+        }
+
+        private void GetTP()
+        {
+            TP = Main.LocalPlayer.GetModPlayer<ThoriumPlayer>();
         }
 
         public override void Load(TagCompound tag)
@@ -73,7 +81,7 @@ namespace PotPot.Players
 
         public override void PostUpdateEquips()
         {
-            foreach(int i in Buffs)
+            foreach (int i in Buffs)
             {
                 if (PotPot.Instance.BuffCallbacks.TryGetValue(i, out Action<PotPotPlayer> action))
                 { 
@@ -115,7 +123,6 @@ namespace PotPot.Players
                             }
                         }
                         float potionSicknessTime = 30.0f + (float)Math.Ceiling((double)additionalTime / 60.0);
-                        //float potionSicknessTime = player.pStone ? additionalTime * 0.75f: additionalTime;
                         player.AddBuff(BuffID.PotionSickness,CalamityUtils.SecondsToFrames(potionSicknessTime), true);
                     }
                 }
@@ -123,7 +130,7 @@ namespace PotPot.Players
                 {
                     if (CP.draconicSurge && !CP.draconicSurgeCooldown)
                     {
-                        player.AddBuff(ModContent.BuffType<DraconicSurgeCooldown>(), CalamityUtils.SecondsToFrames(60f), true);
+                        player.AddBuff(PotPot.Instance.Calamity.BuffType("DraconicSurgeCooldown"), CalamityUtils.SecondsToFrames(60f), true);
                         int additionalTime = 0;
                         for (int n = 0; n < Player.MaxBuffs; n++)
                         {
@@ -144,6 +151,8 @@ namespace PotPot.Players
         public void ApplyBuffs(Player player)
         {
             Buffs.Clear();
+            bool HasMeleeImbue = false;
+            bool HasThrowImbue = false;
 
             foreach (Item i in this.PotPotContent)
             {
@@ -159,6 +168,20 @@ namespace PotPot.Players
                 {
                     Buffs.Add(ItemID.Sashimi);
                     continue;
+                }
+                else if (PotPot.Instance.MutualExclusives["Imbues"].Contains(i.type))
+                {
+                    if (!HasMeleeImbue)
+                        HasMeleeImbue = true;
+                    else
+                        continue;
+                }
+                else if (PotPot.Instance.MutualExclusives.ContainsKey("ThrowImbues") && PotPot.Instance.MutualExclusives["ThrowImbues"].Contains(i.type))
+                {
+                    if (!HasThrowImbue)
+                        HasThrowImbue = true;
+                    else
+                        continue;
                 }
                 Buffs.Add(i.type);
             }

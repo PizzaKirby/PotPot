@@ -20,5 +20,8 @@
     <Reference Include="MMHOOK_CalamityMod.XNA">
       <HintPath>lib\CalamityHooks.dll</HintPath>
     </Reference>
+    <Reference Include="ThoriumMod">
+      <HintPath>D:\Temp\Out2\ThoriumMod\ThoriumMod.XNA.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

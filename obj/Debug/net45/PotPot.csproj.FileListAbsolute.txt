@@ -32,3 +32,4 @@ C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\obj\Debu
 C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\obj\Debug\net45\PotPot.pdb
 C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\bin\Debug\net45\CalamityMod.XNA.dll
 C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\bin\Debug\net45\CalamityMod.XNA.pdb
+C:\Users\pilch\Documents\My Games\Terraria\ModLoader\Mod Sources\PotPot\bin\Debug\net45\ThoriumMod.XNA.dll

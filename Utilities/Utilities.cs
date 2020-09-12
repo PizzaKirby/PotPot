@@ -1,9 +1,4 @@
-﻿using PotPot.Buffs;
-using System;
-using System.Collections.Generic;
-using Terraria;
-
-namespace PotPot.Utilities
+﻿namespace PotPot.Utilities
 {
     struct Utilities
     {

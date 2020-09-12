@@ -1,16 +1,21 @@
+using CalamityMod.CalPlayer;
 using Microsoft.Xna.Framework;
 using PotPot.Calamity;
 using PotPot.Players;
+using PotPot.Thorium;
 using PotPot.UI;
 using System;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Messaging;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
-using CalamityMod.CalPlayer;
+using ThoriumMod;
+using ThoriumMod.NPCs;
+using ThoriumMod.NPCs.BloodMoon;
+using ThoriumMod.NPCs.Depths;
+
 
 namespace PotPot
 {
@@ -22,13 +27,18 @@ namespace PotPot
         internal static PotPot Instance;
         internal UserInterface PotPotInterface;
         internal PotPotUI MainUI;
-        private GameTime _lastUpdateUiGameTime;
         internal Mod Calamity => ModLoader.GetMod("CalamityMod");
-        internal Dictionary<int, Action<PotPotPlayer>> BuffCallbacks;
+        internal Mod Thorium => ModLoader.GetMod("ThoriumMod");
+        internal Dictionary<int, Action<PotPotPlayer>> BuffCallbacks; 
+
+        private GameTime _lastUpdateUiGameTime;
+        internal Dictionary<string, List<int>> MutualExclusives;
+        
         public PotPot()
         {
             Instance = this;
             BuffCallbacks = new Dictionary<int, Action<PotPotPlayer>>();
+            MutualExclusives = new Dictionary<string, List<int>>();
         }
 
         public override void Load()
@@ -42,9 +52,28 @@ namespace PotPot
 
             RegisterVanillaBuffCallbacks();
 
+            MutualExclusives.Add("Imbues",new List<int>
+            {
+                ItemID.FlaskofCursedFlames,
+                ItemID.FlaskofFire,
+                ItemID.FlaskofGold,
+                ItemID.FlaskofIchor,
+                ItemID.FlaskofNanites,
+                ItemID.FlaskofParty,
+                ItemID.FlaskofPoison,
+                ItemID.FlaskofVenom,
+            });
+
             if (this.Calamity != null)
             {
+                Logger.Info("CalamityMod found, enabling interop.");
                 SetupCalamityInterop();
+            }
+
+            if (this.Thorium != null)
+            {
+                Logger.Info("ThoriumMod found, enabling interop.");
+                SetupThoriumInterop();
             }
         }
 
@@ -58,10 +87,25 @@ namespace PotPot
             RegisterCalamityBuffCallbacks();
         }
 
+        private void SetupThoriumInterop()
+        {
+            RegisterThoriumBuffCallbacks();
+            MutualExclusives.Add("ThrowImbues", new List<int>
+            {
+                ThoriumID.Item("ExplosiveCoatingItem"),
+                ThoriumID.Item("FrostCoatingItem"),
+                ThoriumID.Item("GorganCoatingItem"),
+                ThoriumID.Item("SporeCoatingItem"),
+                ThoriumID.Item("ToxicCoatingItem")
+            });
+        }
+
         private void RegisterCallback(int index, Action<PotPotPlayer> action)
         {
             if (index == 0)
                 throw new ArgumentException("Callback index is 0 ; Item not found");
+            if (action == null)
+                throw new ArgumentException("Action is null, please provide an action to execute");
             BuffCallbacks.Add(index, action);
         }
 
@@ -318,11 +362,101 @@ namespace PotPot
 
             #endregion Potions
             #region Flasks
-
+            RegisterCallback(ItemID.FlaskofVenom, (PPP) =>
+            {
+                Main.LocalPlayer.meleeEnchant = 1;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueVenom] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueCursedFlames] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueFire] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueGold] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueIchor] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueNanites] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueConfetti] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbuePoison] = true;
+            });
+            RegisterCallback(ItemID.CursedFlame, (PPP) =>
+            {
+                Main.LocalPlayer.meleeEnchant = 2;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueVenom] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueCursedFlames] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueFire] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueGold] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueIchor] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueNanites] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueConfetti] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbuePoison] = true;
+            });
+            RegisterCallback(ItemID.FlaskofFire, (PPP) =>
+            {
+                Main.LocalPlayer.meleeEnchant = 3;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueVenom] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueCursedFlames] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueFire] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueGold] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueIchor] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueNanites] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueConfetti] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbuePoison] = true;
+            });
+            RegisterCallback(ItemID.FlaskofGold, (PPP) =>
+            {
+                Main.LocalPlayer.meleeEnchant = 4;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueVenom] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueCursedFlames] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueFire] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueGold] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueIchor] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueNanites] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueConfetti] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbuePoison] = true;
+            });
             RegisterCallback(ItemID.FlaskofIchor, (PPP) =>
             {
                 Main.LocalPlayer.meleeEnchant = 5;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueVenom] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueCursedFlames] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueFire] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueGold] = true;
                 Main.LocalPlayer.buffImmune[BuffID.WeaponImbueIchor] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueNanites] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueConfetti] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbuePoison] = true;
+            });
+            RegisterCallback(ItemID.FlaskofNanites, (PPP) =>
+            {
+                Main.LocalPlayer.meleeEnchant = 6;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueVenom] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueCursedFlames] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueFire] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueGold] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueIchor] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueNanites] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueConfetti] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbuePoison] = true;
+            });
+            RegisterCallback(ItemID.FlaskofParty, (PPP) =>
+            {
+                Main.LocalPlayer.meleeEnchant = 7;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueVenom] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueCursedFlames] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueFire] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueGold] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueIchor] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueNanites] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueConfetti] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbuePoison] = true;
+            });
+            RegisterCallback(ItemID.FlaskofPoison, (PPP) =>
+            {
+                Main.LocalPlayer.meleeEnchant = 8;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueVenom] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueCursedFlames] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueFire] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueGold] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueIchor] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueNanites] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbueConfetti] = true;
+                Main.LocalPlayer.buffImmune[BuffID.WeaponImbuePoison] = true;
             });
 
             #endregion Flasks
@@ -454,7 +588,7 @@ namespace PotPot
             });
 
             #endregion
-            #region Calamity_Potions
+            #region Potions
 
             RegisterCallback(CalamityID.Item("AnechoicCoating"), (PPP) => 
             {
@@ -588,7 +722,7 @@ namespace PotPot
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("Zerg")] = true;
             });
 
-            #endregion Calamity_Potions
+            #endregion Potions
             #region Alcohol
 
             RegisterCallback(CalamityID.Item("BloodyMary"), (PPP) => 
@@ -878,6 +1012,331 @@ namespace PotPot
             #endregion Furniture
         }
 
+        private void RegisterThoriumBuffCallbacks()
+        {
+            #region Potions
+
+            RegisterCallback(ThoriumID.Item("ArtilleryPotion"), (PPP) => 
+            {
+                Main.LocalPlayer.maxTurrets++;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("ArtilleryBuff")] = true;
+            });
+            RegisterCallback(ThoriumID.Item("BloodPotion"), (PPP) =>
+            {
+                Main.LocalPlayer.pickSpeed -= 0.15f;
+                Main.LocalPlayer.pickSpeed += 0.15f;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("BloodRush")] = true;
+            });
+            RegisterCallback(ThoriumID.Item("BouncingFlamePotion"), (PPP) =>
+            {
+                ThoriumPlayer TP = PPP.TP;
+                for (int i = 0; i < 200; i++)
+                {
+                    NPC npc = Main.npc[i];
+                    if (npc.active && !npc.friendly && Vector2.Distance(Main.LocalPlayer.Center, npc.Center) < 375f)
+                    {
+                        if (npc.shadowFlame)
+                        {
+                            TP.bouncingFlameBool = true;
+                            TP.bouncingFlameBoolShadowFire = true;
+                        }
+                        else if (npc.GetGlobalNPC<ThoriumGlobalNPC>().melting)
+                        {
+                            TP.bouncingFlameBool = true;
+                            TP.bouncingFlameBoolMeltFire = true;
+                        }
+                        else if (npc.onFrostBurn)
+                        {
+                            TP.bouncingFlameBool = true;
+                            TP.bouncingFlameBoolFrostFire = true;
+                        }
+                        else if (npc.onFire2)
+                        {
+                            TP.bouncingFlameBool = true;
+                            TP.bouncingFlameBoolCursedFire = true;
+                        }
+                        else if (npc.onFire)
+                        {
+                            TP.bouncingFlameBool = true;
+                            TP.bouncingFlameBoolFire = true;
+                        }
+                        else if (npc.GetGlobalNPC<ThoriumGlobalNPC>().singed)
+                        {
+                            TP.bouncingFlameBool = true;
+                            TP.bouncingFlameBoolSingedFire = true;
+                        }
+                    }
+                }
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("BouncingFlameBuff")] = true;
+            });
+            RegisterCallback(ThoriumID.Item("BugRepellent"), (PPP) =>
+            {
+                Main.LocalPlayer.npcTypeNoAggro[42] = true;
+                Main.LocalPlayer.npcTypeNoAggro[231] = true;
+                Main.LocalPlayer.npcTypeNoAggro[232] = true;
+                Main.LocalPlayer.npcTypeNoAggro[233] = true;
+                Main.LocalPlayer.npcTypeNoAggro[234] = true;
+                Main.LocalPlayer.npcTypeNoAggro[235] = true;
+                Main.LocalPlayer.npcTypeNoAggro[176] = true;
+                Main.LocalPlayer.npcTypeNoAggro[69] = true;
+                Main.LocalPlayer.npcTypeNoAggro[508] = true;
+                Main.LocalPlayer.npcTypeNoAggro[509] = true;
+                Main.LocalPlayer.npcTypeNoAggro[205] = true;
+                Main.LocalPlayer.npcTypeNoAggro[210] = true;
+                Main.LocalPlayer.npcTypeNoAggro[211] = true;
+                Main.LocalPlayer.npcTypeNoAggro[217] = true;
+                Main.LocalPlayer.npcTypeNoAggro[218] = true;
+                Main.LocalPlayer.npcTypeNoAggro[219] = true;
+                Main.LocalPlayer.npcTypeNoAggro[258] = true;
+                Main.LocalPlayer.npcTypeNoAggro[530] = true;
+                Main.LocalPlayer.npcTypeNoAggro[531] = true;
+                Main.LocalPlayer.npcTypeNoAggro[ModContent.NPCType<MossWasp>()] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("InsectRepellentBuff")] = true;
+            });
+            RegisterCallback(ThoriumID.Item("ConflagrationPotion"), (PPP) =>
+            {
+                Main.LocalPlayer.allDamage += 0.15f;
+                PPP.TP.conflagrate = true;
+                Lighting.AddLight(Main.LocalPlayer.position, 0.3f, 0.1f, 0.05f);
+                Vector2 vector;
+                vector = new Vector2((float)Main.rand.Next(-40, 41), (float)Main.rand.Next(-40, 41));
+                Dust dust = Dust.NewDustDirect(Main.LocalPlayer.position, Main.LocalPlayer.width, Main.LocalPlayer.height, 127, 0f, 0f, 100, default(Color), 1.75f);
+                dust.noGravity = true;
+                dust.noLight = true;
+                dust.position += vector;
+                dust.velocity = -vector * 0.055f;
+                vector = new Vector2((float)Main.rand.Next(-40, 41), (float)Main.rand.Next(-40, 41));
+                Dust dust2 = Dust.NewDustDirect(Main.LocalPlayer.position, Main.LocalPlayer.width, Main.LocalPlayer.height, 6, 0f, 0f, 100, default(Color), 1.25f);
+                dust2.noGravity = true;
+                dust2.noLight = true;
+                dust2.position += vector;
+                dust2.velocity = -vector * 0.055f;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("Conflagrate")] = true;
+            });
+            RegisterCallback(ThoriumID.Item("CreativityPotion"), (PPP) =>
+            {
+                PPP.TP.bardDropPotion++;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("CreativityDrop")] = true;
+            });
+            RegisterCallback(ThoriumID.Item("FishRepellent"), (PPP) =>
+            {
+                Main.LocalPlayer.npcTypeNoAggro[58] = true;
+                Main.LocalPlayer.npcTypeNoAggro[224] = true;
+                Main.LocalPlayer.npcTypeNoAggro[102] = true;
+                Main.LocalPlayer.npcTypeNoAggro[241] = true;
+                Main.LocalPlayer.npcTypeNoAggro[57] = true;
+                Main.LocalPlayer.npcTypeNoAggro[465] = true;
+                Main.LocalPlayer.npcTypeNoAggro[157] = true;
+                Main.LocalPlayer.npcTypeNoAggro[65] = true;
+                Main.LocalPlayer.npcTypeNoAggro[ModContent.NPCType<Blowfish>()] = true;
+                Main.LocalPlayer.npcTypeNoAggro[ModContent.NPCType<AbyssalAngler>()] = true;
+                Main.LocalPlayer.npcTypeNoAggro[ModContent.NPCType<AbyssalAngler2>()] = true;
+                Main.LocalPlayer.npcTypeNoAggro[ModContent.NPCType<Hammerhead>()] = true;
+                Main.LocalPlayer.npcTypeNoAggro[ModContent.NPCType<Barracuda>()] = true;
+                Main.LocalPlayer.npcTypeNoAggro[ModContent.NPCType<Sharptooth>()] = true;
+                Main.LocalPlayer.npcTypeNoAggro[ModContent.NPCType<FeedingFrenzy>()] = true;
+                Main.LocalPlayer.npcTypeNoAggro[ModContent.NPCType<FeedingFrenzy2>()] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("FishRepellentBuff")] = true;
+            });
+            RegisterCallback(ThoriumID.Item("HolyPotion"), (PPP) =>
+            {
+                PPP.TP.healBonus++;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("HolyBonus")] = true;
+            });
+            RegisterCallback(ThoriumID.Item("SilverTonguePotion"), (PPP) =>
+            {
+                Main.LocalPlayer.discount = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("SilverTongue")] = true;
+            });
+            RegisterCallback(ThoriumID.Item("SkeletonRepellent"), (PPP) =>
+            {
+                Main.LocalPlayer.npcTypeNoAggro[21] = true;
+                Main.LocalPlayer.npcTypeNoAggro[77] = true;
+                Main.LocalPlayer.npcTypeNoAggro[110] = true;
+                Main.LocalPlayer.npcTypeNoAggro[201] = true;
+                Main.LocalPlayer.npcTypeNoAggro[202] = true;
+                Main.LocalPlayer.npcTypeNoAggro[203] = true;
+                Main.LocalPlayer.npcTypeNoAggro[291] = true;
+                Main.LocalPlayer.npcTypeNoAggro[292] = true;
+                Main.LocalPlayer.npcTypeNoAggro[293] = true;
+                Main.LocalPlayer.npcTypeNoAggro[322] = true;
+                Main.LocalPlayer.npcTypeNoAggro[323] = true;
+                Main.LocalPlayer.npcTypeNoAggro[324] = true;
+                Main.LocalPlayer.npcTypeNoAggro[449] = true;
+                Main.LocalPlayer.npcTypeNoAggro[450] = true;
+                Main.LocalPlayer.npcTypeNoAggro[451] = true;
+                Main.LocalPlayer.npcTypeNoAggro[452] = true;
+                Main.LocalPlayer.npcTypeNoAggro[481] = true;
+                Main.LocalPlayer.npcTypeNoAggro[31] = true;
+                Main.LocalPlayer.npcTypeNoAggro[32] = true;
+                Main.LocalPlayer.npcTypeNoAggro[269] = true;
+                Main.LocalPlayer.npcTypeNoAggro[270] = true;
+                Main.LocalPlayer.npcTypeNoAggro[271] = true;
+                Main.LocalPlayer.npcTypeNoAggro[272] = true;
+                Main.LocalPlayer.npcTypeNoAggro[273] = true;
+                Main.LocalPlayer.npcTypeNoAggro[274] = true;
+                Main.LocalPlayer.npcTypeNoAggro[275] = true;
+                Main.LocalPlayer.npcTypeNoAggro[276] = true;
+                Main.LocalPlayer.npcTypeNoAggro[277] = true;
+                Main.LocalPlayer.npcTypeNoAggro[278] = true;
+                Main.LocalPlayer.npcTypeNoAggro[279] = true;
+                Main.LocalPlayer.npcTypeNoAggro[280] = true;
+                Main.LocalPlayer.npcTypeNoAggro[281] = true;
+                Main.LocalPlayer.npcTypeNoAggro[282] = true;
+                Main.LocalPlayer.npcTypeNoAggro[283] = true;
+                Main.LocalPlayer.npcTypeNoAggro[284] = true;
+                Main.LocalPlayer.npcTypeNoAggro[285] = true;
+                Main.LocalPlayer.npcTypeNoAggro[286] = true;
+                Main.LocalPlayer.npcTypeNoAggro[287] = true;
+                Main.LocalPlayer.npcTypeNoAggro[294] = true;
+                Main.LocalPlayer.npcTypeNoAggro[295] = true;
+                Main.LocalPlayer.npcTypeNoAggro[296] = true;
+                Main.LocalPlayer.npcTypeNoAggro[ModContent.NPCType<AncientCharger>()] = true;
+                Main.LocalPlayer.npcTypeNoAggro[ModContent.NPCType<DarksteelKnight>()] = true;
+                Main.LocalPlayer.npcTypeNoAggro[ModContent.NPCType<Shambler>()] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("SkeletonRepellentBuff")] = true;
+            });
+            RegisterCallback(ThoriumID.Item("ZombieRepellent"), (PPP) =>
+            {
+                Main.LocalPlayer.npcTypeNoAggro[3] = true;
+                Main.LocalPlayer.npcTypeNoAggro[132] = true;
+                Main.LocalPlayer.npcTypeNoAggro[161] = true;
+                Main.LocalPlayer.npcTypeNoAggro[186] = true;
+                Main.LocalPlayer.npcTypeNoAggro[187] = true;
+                Main.LocalPlayer.npcTypeNoAggro[188] = true;
+                Main.LocalPlayer.npcTypeNoAggro[189] = true;
+                Main.LocalPlayer.npcTypeNoAggro[200] = true;
+                Main.LocalPlayer.npcTypeNoAggro[223] = true;
+                Main.LocalPlayer.npcTypeNoAggro[254] = true;
+                Main.LocalPlayer.npcTypeNoAggro[255] = true;
+                Main.LocalPlayer.npcTypeNoAggro[319] = true;
+                Main.LocalPlayer.npcTypeNoAggro[320] = true;
+                Main.LocalPlayer.npcTypeNoAggro[321] = true;
+                Main.LocalPlayer.npcTypeNoAggro[331] = true;
+                Main.LocalPlayer.npcTypeNoAggro[332] = true;
+                Main.LocalPlayer.npcTypeNoAggro[430] = true;
+                Main.LocalPlayer.npcTypeNoAggro[431] = true;
+                Main.LocalPlayer.npcTypeNoAggro[432] = true;
+                Main.LocalPlayer.npcTypeNoAggro[433] = true;
+                Main.LocalPlayer.npcTypeNoAggro[434] = true;
+                Main.LocalPlayer.npcTypeNoAggro[435] = true;
+                Main.LocalPlayer.npcTypeNoAggro[436] = true;
+                Main.LocalPlayer.npcTypeNoAggro[489] = true;
+                Main.LocalPlayer.npcTypeNoAggro[ModContent.NPCType<ImpaledZombie>()] = true;
+                Main.LocalPlayer.npcTypeNoAggro[ModContent.NPCType<Abomination>()] = true;
+                Main.LocalPlayer.npcTypeNoAggro[ModContent.NPCType<Biter>()] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("ZombieRepellentBuff")] = true;
+            });
+            RegisterCallback(ThoriumID.Item("AquaPotion"), (PPP) =>
+            {
+                Main.LocalPlayer.ignoreWater = true;
+                if (Main.LocalPlayer.wet)
+                {
+                    Main.LocalPlayer.moveSpeed += 0.1f;
+                    Main.LocalPlayer.runAcceleration += 0.08f;
+                }
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("AquaAffinity")] = true;
+            });
+            RegisterCallback(ThoriumID.Item("FrenzyPotion"), (PPP) =>
+            {
+                PPP.TP.attackSpeed += 0.08f;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("Frenzy")] = true;
+            });
+            RegisterCallback(ThoriumID.Item("GlowingPotion"), (PPP) =>
+            {
+                PPP.TP.radiantBoost += 0.1f;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("RadiantBoost")] = true;
+            });
+            RegisterCallback(ThoriumID.Item("DashPotion"), (PPP) =>
+            {
+                Main.LocalPlayer.dash = 1;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("DashBuff")] = true;
+            });
+            RegisterCallback(ThoriumID.Item("AssassinPotion"), (PPP) =>
+            {
+                PPP.TP.assassinThrower = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("AssassinBuff")] = true;
+            });
+            RegisterCallback(ThoriumID.Item("HydrationPotion"), (PPP) =>
+            {
+                PPP.TP.techRechargeBonus = 30;
+                PPP.TP.throwerExhaustionRegenBonus += 0.25f;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("HydrationBuff")] = true;
+            });
+
+            #endregion Potions
+            #region Coatings
+
+            RegisterCallback(ThoriumID.Item("ExplosiveCoatingItem"), (PPP) =>
+            {
+                PPP.TP.explodeCoat = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("ExplosionCoating")] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("FrostCoating")] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("GorganCoating")] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("SporeCoating")] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("ToxicCoating")] = true;
+            });
+            RegisterCallback(ThoriumID.Item("FrostCoatingItem"), (PPP) =>
+            {
+                PPP.TP.freezeCoat = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("ExplosionCoating")] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("FrostCoating")] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("GorganCoating")] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("SporeCoating")] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("ToxicCoating")] = true;
+            });
+            RegisterCallback(ThoriumID.Item("GorganCoatingItem"), (PPP) =>
+            {
+                PPP.TP.gorganCoat = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("ExplosionCoating")] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("FrostCoating")] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("GorganCoating")] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("SporeCoating")] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("ToxicCoating")] = true;
+            });
+            RegisterCallback(ThoriumID.Item("SporeCoatingItem"), (PPP) =>
+            {
+                PPP.TP.sporeCoat = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("ExplosionCoating")] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("FrostCoating")] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("GorganCoating")] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("SporeCoating")] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("ToxicCoating")] = true;
+            });
+            RegisterCallback(ThoriumID.Item("ToxicCoatingItem"), (PPP) =>
+            {
+                PPP.TP.sporeCoat = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("ExplosionCoating")] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("FrostCoating")] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("GorganCoating")] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("SporeCoating")] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("ToxicCoating")] = true;
+            });
+
+            #endregion Coatings
+            #region Misc
+
+            RegisterCallback(ThoriumID.Item("CactusFruit"), (PPP) =>
+            {
+                Main.LocalPlayer.buffImmune[46] = true;
+                Main.LocalPlayer.buffImmune[47] = true;
+                Main.LocalPlayer.buffImmune[22] = true;
+                Main.LocalPlayer.buffImmune[23] = true;
+                Main.LocalPlayer.buffImmune[30] = true;
+                Main.LocalPlayer.buffImmune[31] = true;
+                Main.LocalPlayer.buffImmune[32] = true;
+                Main.LocalPlayer.buffImmune[33] = true;
+                Main.LocalPlayer.buffImmune[35] = true;
+                Main.LocalPlayer.buffImmune[69] = true;
+                Main.LocalPlayer.buffImmune[80] = true;
+                Main.LocalPlayer.buffImmune[156] = true;
+                Main.LocalPlayer.buffImmune[149] = true;
+                Main.LocalPlayer.buffImmune[ThoriumID.Buff("CactusJuice")] = true;
+            });
+
+            #endregion Misc
+        }
+
         public override void UpdateUI(GameTime gameTime)
         {
             _lastUpdateUiGameTime = gameTime;
@@ -910,6 +1369,8 @@ namespace PotPot
         {
             MainUI = null;
             Instance = null;
+            PotPotInterface = null;
+            BuffCallbacks = null;
         }
 
         internal void ShowUI()

@@ -71,7 +71,7 @@ namespace PotPot.UI
         private bool IsValidItem(Item newItem, Item currentItem)
         {
 
-            if (newItem.buffType != 0 || newItem.Name == "")
+            if (newItem.Name == "")
             {
                 return true;
             }

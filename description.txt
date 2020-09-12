@@ -15,18 +15,18 @@ Also saves inventory space ¯\_(ツ)_/¯.
 To use craft a 'PotPot' with bottled water at a workbench and rightclick to open a UI.
 Place potions inside and close the UI to apply buffs.
 Campfires / Heart Lanterns / etc. also work.
-You don't need to keep it inventory, it's only used to set your current Potions.
+You don't need to keep it in your inventory, it's only used to set your current Potions.
 Currently has 49 Slots.
 
 Anything with 'Campfire' in it's name grants the campfire buff.
 Anything that gives Well Fed on consumption grants the well fed buff.
 In the debug command these show up as 'Campfire' and 'Sashimi' respectively.
 
-If you load into a World and have items from anothermod inside a PotPot which is no longer enabled these items will be deleted.
+If you load into a World and have items from another mod inside a PotPot which is no longer enabled these items will be deleted.
 Internal Cooldowns like in the Draconic Elixir also work correctly.
 Potion Interactions between Vanilla and Calamity are also included, like ProfaneRage Potion disabling Vanilla Rage or Well Fed being buffed by a Lore item.
 
-This mod should be less prone to break after a Calamity update now.
+This mod should be less prone to break after an update of a mod it interops with now.
 
 If you have issues , suggestions or want to contribute go to PotPot's GitHub page.
 
@@ -39,6 +39,8 @@ Recent Updates
 -> Added debug command '/PotPot <Items/Buffs>'
 -> Added Calamity Lore Item support
 -> Added Calamity Candle support
+-> Added Thorium Support
+-> Added proper support for mutually exclusive buffs like vanilla weapon imbues and thorium throw imbues
 
 ================
 Planned Features

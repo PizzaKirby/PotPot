@@ -15,14 +15,12 @@ namespace PotPot.Items
         public override void SetDefaults()
         {
             item.useTurn = true;
-            item.useStyle = ItemUseStyleID.EatingUsing;
+            item.useStyle = ItemUseStyleID.HoldingUp;
             item.useAnimation = 15;
             item.useTime = 15;
             item.rare = 13;
-            item.UseSound = SoundID.Item3;
-            item.buffType = mod.BuffType("PotPotDummyBuff");
-            item.buffTime = 1;
-            item.expert = true;
+            item.UseSound = SoundID.Item4;
+            item.maxStack = 1;
         }
         public override void AddRecipes()
         {
@@ -34,14 +32,7 @@ namespace PotPot.Items
         }
         public override bool UseItem(Player player)
         {
-            player.ClearBuff(mod.BuffType("PotPotDummyBuff"));
-            if (player.altFunctionUse == 2)
-            {
-                PotPot.Instance.ShowUI();
-                return true;
-            }
-            PotPotPlayer modPlayer = Main.LocalPlayer.GetModPlayer<PotPotPlayer>();
-            modPlayer.ApplyBuffs(player);
+            PotPot.Instance.ShowUI();
             return true;
         }
 
