@@ -35,7 +35,7 @@ If you have issues , suggestions or want to contribute go to PotPot's GitHub pag
 Recent Updates
 ==============
 
--> Rewritten some of the inner workings making adding support for other items way easier & faster
+-> Fixed a crash that occured when leaving a game and rejoining it without restarting the game or reloading mods
 -> Added debug command '/PotPot <Items/Buffs>'
 -> Added Calamity Lore Item support
 -> Added Calamity Candle support
@@ -48,4 +48,3 @@ Planned Features
 -> Remove Inferno & Tesla Pot Visual 
 -> Dynamic UI
 -> Toggle Potion Effects
--> Thorium Potions

@@ -55,7 +55,7 @@ namespace PotPot.UI
             btnClose.HAlign = 0.99f;
             btnClose.VAlign = 0.01f;
             btnClose.TextColor = Color.Black;
-            btnClose.OnClick += (UIMouseEvent evt, UIElement listeningElement) => { PotPot.Instance.HideUI(); modPlayer.ApplyBuffs(Main.LocalPlayer); };
+            btnClose.OnClick += (UIMouseEvent evt, UIElement listeningElement) => { PotPot.Instance.HideUI(); modPlayer.ApplyBuffs(); };
             btnClose.OnMouseOver += (UIMouseEvent evt, UIElement listeningElement) => btnClose.TextColor = Color.White;
             btnClose.OnMouseOut += (UIMouseEvent evt, UIElement listeningElement) => btnClose.TextColor = Color.Black;
             panel.Append(btnClose);

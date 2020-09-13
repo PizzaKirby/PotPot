@@ -18,8 +18,6 @@ namespace PotPot.Players
     {
         public List<Item> PotPotContent;
         internal List<int> Buffs;
-        internal CalamityPlayer CP;
-        internal ThoriumPlayer TP;
  
         public PotPotPlayer()
         {
@@ -36,38 +34,19 @@ namespace PotPot.Players
         }
 
         public override void OnEnterWorld(Player player)
-        {
-
+        { 
             if (!Main.dedServ)
             { 
                 PotPot.Instance.MainUI = new PotPotUI();
                 PotPot.Instance.MainUI.Activate();
             }
-            if ( PotPot.Instance.Calamity != null )
-            {
-                GetCP();
-            }
-            if (PotPot.Instance.Thorium != null)
-            {
-                GetTP();
-            }
-            ApplyBuffs(player);
+            ApplyBuffs();
         }
 
         public override void PlayerDisconnect(Player player)
         {
             PotPot.Instance.MainUI = null;
             Buffs.Clear();
-        }
-
-        private void GetCP()
-        {
-            CP = Main.LocalPlayer.GetModPlayer<CalamityPlayer>();
-        }
-
-        private void GetTP()
-        {
-            TP = Main.LocalPlayer.GetModPlayer<ThoriumPlayer>();
         }
 
         public override void Load(TagCompound tag)
@@ -106,11 +85,11 @@ namespace PotPot.Players
 
         public bool CalamityPreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
         {
-            if ( CP != null)
+            if ( Main.LocalPlayer.GetModPlayer<CalamityPlayer>() != null)
             {
-                if( CP.godSlayer && !CP.godSlayerCooldown)
+                if( Main.LocalPlayer.GetModPlayer<CalamityPlayer>().godSlayer && !Main.LocalPlayer.GetModPlayer<CalamityPlayer>().godSlayerCooldown)
                 {
-                    if(CP.draconicSurge)
+                    if(Main.LocalPlayer.GetModPlayer<CalamityPlayer>().draconicSurge)
                     {
                         player.AddBuff(PotPot.Instance.Calamity.BuffType("DraconicSurgeCooldown"), 120, true);
                         int additionalTime = 0;
@@ -126,9 +105,9 @@ namespace PotPot.Players
                         player.AddBuff(BuffID.PotionSickness,CalamityUtils.SecondsToFrames(potionSicknessTime), true);
                     }
                 }
-                if (CP.silvaSet && CP.silvaCountdown > 0)
+                if (Main.LocalPlayer.GetModPlayer<CalamityPlayer>().silvaSet && Main.LocalPlayer.GetModPlayer<CalamityPlayer>().silvaCountdown > 0)
                 {
-                    if (CP.draconicSurge && !CP.draconicSurgeCooldown)
+                    if (Main.LocalPlayer.GetModPlayer<CalamityPlayer>().draconicSurge && !Main.LocalPlayer.GetModPlayer<CalamityPlayer>().draconicSurgeCooldown)
                     {
                         player.AddBuff(PotPot.Instance.Calamity.BuffType("DraconicSurgeCooldown"), CalamityUtils.SecondsToFrames(60f), true);
                         int additionalTime = 0;
@@ -148,7 +127,7 @@ namespace PotPot.Players
             return true;
         }
 
-        public void ApplyBuffs(Player player)
+        public void ApplyBuffs()
         {
             Buffs.Clear();
             bool HasMeleeImbue = false;

@@ -572,7 +572,7 @@ namespace PotPot
                 Main.LocalPlayer.thrownCrit += 10;
                 Main.LocalPlayer.magicCrit += 10;
                 Main.LocalPlayer.rangedCrit += 10;
-                PPP.CP.throwingCrit += 10;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().throwingCrit += 10;
                 Main.LocalPlayer.buffImmune[BuffID.Rage] = true;
             });
             BuffCallbacks.Remove(ItemID.WrathPotion);
@@ -583,7 +583,7 @@ namespace PotPot
                 Main.LocalPlayer.magicDamage += 0.1f;
                 Main.LocalPlayer.rangedDamage += 0.1f;
                 Main.LocalPlayer.minionDamage += 0.1f;
-                PPP.CP.throwingDamage += 0.1f;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().throwingDamage += 0.1f;
                 Main.LocalPlayer.buffImmune[BuffID.Wrath] = true;
             });
 
@@ -592,133 +592,133 @@ namespace PotPot
 
             RegisterCallback(CalamityID.Item("AnechoicCoating"), (PPP) => 
             {
-                PPP.CP.anechoicCoating = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().anechoicCoating = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("AnechoicCoatingBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("AstralInjection"), (PPP) => 
             {
-                PPP.CP.astralInjection = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().astralInjection = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("AstralInjectionBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("BoundingPotion"), (PPP) => 
             {
-                PPP.CP.bounding = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().bounding = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("BoundingBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("CadencePotion"), (PPP) => 
             {
-                PPP.CP.cadence = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().cadence = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("Cadence")] = true;
             });
             RegisterCallback(CalamityID.Item("CalamitasBrew"), (PPP) => 
             {
-                PPP.CP.aWeapon = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().aWeapon = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("AbyssalWeapon")] = true;
             });
             RegisterCallback(CalamityID.Item("CalciumPotion"), (PPP) => 
             {
-                PPP.CP.calcium = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().calcium = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("CalciumBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("CeaselessHungerPotion"), (PPP) => 
             {
-                PPP.CP.ceaselessHunger = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().ceaselessHunger = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("CeaselessHunger")] = true;
             });
             RegisterCallback(CalamityID.Item("CrumblingPotion"), (PPP) => 
             {
-                PPP.CP.armorCrumbling = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().armorCrumbling = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("ArmorCrumbling")] = true;
             });
             RegisterCallback(CalamityID.Item("DraconicElixir"), (PPP) => 
             {
-                if(!PPP.CP.draconicSurgeCooldown)
-                    PPP.CP.draconicSurge = true;
+                if(!Main.LocalPlayer.GetModPlayer<CalamityPlayer>().draconicSurgeCooldown)
+                    Main.LocalPlayer.GetModPlayer<CalamityPlayer>().draconicSurge = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("DraconicSurgeBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("GravityNormalizerPotion"), (PPP) => 
             {
-                PPP.CP.gravityNormalizer = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().gravityNormalizer = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("GravityNormalizerBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("HolyWrathPotion"), (PPP) => 
             {
-                PPP.CP.holyWrath = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().holyWrath = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("HolyWrathBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("PenumbraPotion"), (PPP) => 
             {
-                PPP.CP.penumbra = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().penumbra = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("PenumbraBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("PhotosynthesisPotion"), (PPP) => 
             {
-                PPP.CP.photosynthesis = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().photosynthesis = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("PhotosynthesisBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("PotionofOmniscience"), (PPP) => 
             {
-                PPP.CP.omniscience = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().omniscience = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("Omniscience")] = true;
             });
             RegisterCallback(CalamityID.Item("ProfanedRagePotion"), (PPP) => 
             {
-                PPP.CP.profanedRage = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().profanedRage = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("ProfanedRageBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("RevivifyPotion"), (PPP) =>
             {
-                PPP.CP.revivify = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().revivify = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("Revivify")] = true;
             });
             RegisterCallback(CalamityID.Item("ShadowPotion"), (PPP) => 
             {
-                PPP.CP.shadow = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().shadow = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("ShadowBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("ShatteringPotion"), (PPP) => 
             {
-                PPP.CP.armorShattering = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().armorShattering = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("ArmorShattering")] = true;
             });
             RegisterCallback(CalamityID.Item("SoaringPotion"), (PPP) => 
             {
-                PPP.CP.soaring = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().soaring = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("Soaring")] = true;
             });
             RegisterCallback(CalamityID.Item("SulphurskinPotion"), (PPP) => 
             {
-                PPP.CP.sulphurskin = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().sulphurskin = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("SulphurskinBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("TeslaPotion"), (PPP) => 
             {
-                PPP.CP.tesla = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().tesla = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("TeslaBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("TitanScalePotion"), (PPP) => 
             {
-                PPP.CP.tScale = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().tScale = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("TitanScale")] = true;
             });
             RegisterCallback(CalamityID.Item("TriumphPotion"), (PPP) =>
             {
-                PPP.CP.triumph = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().triumph = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("TriumphBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("YharimsStimulants"), (PPP) => 
             {
-                PPP.CP.yPower = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().yPower = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("YharimPower")] = true;
             });
             RegisterCallback(CalamityID.Item("ZenPotion"), (PPP) => 
             {
-                PPP.CP.zen = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().zen = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("Zen")] = true;
             });
             RegisterCallback(CalamityID.Item("ZergPotion"), (PPP) => 
             {
-                PPP.CP.zerg = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().zerg = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("Zerg")] = true;
             });
 
@@ -727,87 +727,87 @@ namespace PotPot
 
             RegisterCallback(CalamityID.Item("BloodyMary"), (PPP) => 
             {
-                PPP.CP.bloodyMary = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().bloodyMary = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("BloodyMaryBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("CaribbeanRum"), (PPP) => 
             {
-                PPP.CP.caribbeanRum = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().caribbeanRum = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("CaribbeanRumBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("CinnamonRoll"), (PPP) => 
             {
-                PPP.CP.cinnamonRoll = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().cinnamonRoll = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("CinnamonRollBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("Everclear"), (PPP) => 
             {
-                PPP.CP.everclear = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().everclear = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("EverclearBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("EvergreenGin"), (PPP) => 
             {
-                PPP.CP.evergreenGin = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().evergreenGin = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("EvergreenGinBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("FabsolsVodka"), (PPP) => 
             {
-                PPP.CP.fabsolVodka = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().fabsolVodka = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("FabsolVodkaBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("Fireball"), (PPP) => 
             {
-                PPP.CP.fireball = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().fireball = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("FireballBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("Moonshine"), (PPP) => 
             {
-                PPP.CP.moonshine = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().moonshine = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("MoonshineBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("MoscowMule"), (PPP) => 
             {
-                PPP.CP.moscowMule = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().moscowMule = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("MoscowMuleBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("Rum"), (PPP) => 
             {
-                PPP.CP.rum = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().rum = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("RumBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("Screwdriver"), (PPP) => 
             {
-                PPP.CP.screwdriver = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().screwdriver = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("ScrewdriverBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("StarBeamRye"), (PPP) => 
             {
-                PPP.CP.starBeamRye = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().starBeamRye = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("StarBeamRyeBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("Tequila"), (PPP) => 
             {
-                PPP.CP.tequila = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().tequila = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("TequilaBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("TequilaSunrise"), (PPP) => 
             {
-                PPP.CP.tequilaSunrise = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().tequilaSunrise = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("TequilaSunriseBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("Vodka"), (PPP) => 
             {
-                PPP.CP.vodka = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().vodka = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("VodkaBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("Whiskey"), (PPP) => 
             {
-                PPP.CP.whiskey = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().whiskey = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("WhiskeyBuff")] = true;
             });
             RegisterCallback(CalamityID.Item("WhiteWine"), (PPP) => 
             {
-                PPP.CP.whiteWine = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().whiteWine = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("WhiteWineBuff")] = true;
             });
 
@@ -816,63 +816,63 @@ namespace PotPot
 
             RegisterCallback(CalamityID.Item("KnowledgeAquaticScourge"), (PPP) =>
             {
-                PPP.CP.aquaticScourgeLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().aquaticScourgeLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeAstrumAureus"), (PPP) =>
             {
-                PPP.CP.astrumAureusLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().astrumAureusLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeAstrumDeus"), (PPP) =>
             {
-                PPP.CP.astrumDeusLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().astrumDeusLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeBrimstoneElemental"), (PPP) =>
             {
-                PPP.CP.brimstoneElementalLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().brimstoneElementalLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeCalamitas"), (PPP) =>
             {
-                PPP.CP.SCalLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().SCalLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeCalamitasClone"), (PPP) =>
             {
-                PPP.CP.calamitasLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().calamitasLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeCorruption"), (PPP) =>
             {
-                PPP.CP.corruptionLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().corruptionLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeCrabulon"), (PPP) =>
             {
-                PPP.CP.crabulonLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().crabulonLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeCrimson"), (PPP) =>
             {
-                PPP.CP.crimsonLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().crimsonLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeCryogen"), (PPP) =>
             {
-                PPP.CP.dashMod = 6;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().dashMod = 6;
             });
             RegisterCallback(CalamityID.Item("KnowledgeDesertScourge"), (PPP) =>
             {
-                PPP.CP.desertScourgeLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().desertScourgeLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeDestroyer"), (PPP) =>
             {
-                PPP.CP.destroyerLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().destroyerLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeDevourerofGods"), (PPP) =>
             {
-                PPP.CP.DoGLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().DoGLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeDukeFishron"), (PPP) =>
             {
-                PPP.CP.dukeFishronLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().dukeFishronLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeEaterofWorlds"), (PPP) =>
             {
-                PPP.CP.eaterOfWorldsLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().eaterOfWorldsLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeEyeofCthulhu"), (PPP) =>
             {
@@ -885,83 +885,83 @@ namespace PotPot
             });
             RegisterCallback(CalamityID.Item("KnowledgeGolem"), (PPP) =>
             {
-                PPP.CP.golemLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().golemLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeHiveMind"), (PPP) =>
             {
                 if (Main.LocalPlayer.ZoneCorrupt)
-                    PPP.CP.hiveMindLore = true;
+                    Main.LocalPlayer.GetModPlayer<CalamityPlayer>().hiveMindLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeKingSlime"), (PPP) =>
             {
-                PPP.CP.kingSlimeLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().kingSlimeLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeLeviathanandSiren"), (PPP) =>
             {
-                PPP.CP.leviathanAndSirenLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().leviathanAndSirenLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeLunaticCultist"), (PPP) =>
             {
                 if(NPC.LunarApocalypseIsUp)
-                    PPP.CP.lunaticCultistLore = true;
+                    Main.LocalPlayer.GetModPlayer<CalamityPlayer>().lunaticCultistLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeMoonLord"), (PPP) =>
             {
-                PPP.CP.moonLordLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().moonLordLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeOcean"), (PPP) =>
             {
-                PPP.CP.oceanLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().oceanLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeOldDuke"), (PPP) =>
             {
-                PPP.CP.boomerDukeLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().boomerDukeLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgePerforators"), (PPP) =>
             {
                 if(Main.LocalPlayer.ZoneCrimson)
-                    PPP.CP.perforatorLore = true;
+                    Main.LocalPlayer.GetModPlayer<CalamityPlayer>().perforatorLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgePlaguebringerGoliath"), (PPP) =>
             {
-                PPP.CP.plaguebringerGoliathLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().plaguebringerGoliathLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgePlantera"), (PPP) =>
             {
-                PPP.CP.planteraLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().planteraLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgePolterghast"), (PPP) =>
             {
-                PPP.CP.polterghastLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().polterghastLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeProvidence"), (PPP) =>
             {
-                PPP.CP.providenceLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().providenceLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeQueenBee"), (PPP) =>
             {
-                PPP.CP.queenBeeLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().queenBeeLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeRavager"), (PPP) =>
             {
-                PPP.CP.ravagerLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().ravagerLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeSkeletron"), (PPP) =>
             {
                 if(Main.LocalPlayer.ZoneDungeon)
-                    PPP.CP.skeletronLore = true;
+                    Main.LocalPlayer.GetModPlayer<CalamityPlayer>().skeletronLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeSkeletronPrime"), (PPP) =>
             {
-                PPP.CP.skeletronLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().skeletronLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeSlimeGod"), (PPP) =>
             {
-                if (Main.LocalPlayer.mount.Active || PPP.CP.slimeGodLoreProcessed)
+                if (Main.LocalPlayer.mount.Active || Main.LocalPlayer.GetModPlayer<CalamityPlayer>().slimeGodLoreProcessed)
                 {
                     return;
                 }
-                PPP.CP.slimeGodLoreProcessed = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().slimeGodLoreProcessed = true;
                 if (Main.LocalPlayer.dashDelay < 0 || (Main.LocalPlayer.velocity.Length() >= 11f && CalamityPlayer.areThereAnyDamnBosses))
                 {
                     Main.LocalPlayer.velocity.X = Main.LocalPlayer.velocity.X * 0.9f;
@@ -975,19 +975,19 @@ namespace PotPot
             });
             RegisterCallback(CalamityID.Item("KnowledgeTwins"), (PPP) =>
             {
-                PPP.CP.twinsLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().twinsLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeUnderworld"), (PPP) =>
             {
-                PPP.CP.underworldLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().underworldLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeWallofFlesh"), (PPP) =>
             {
-                PPP.CP.wallOfFleshLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().wallOfFleshLore = true;
             });
             RegisterCallback(CalamityID.Item("KnowledgeYharon"), (PPP) =>
             {
-                PPP.CP.yharonLore = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().yharonLore = true;
             });
 
             #endregion Lore
@@ -995,17 +995,17 @@ namespace PotPot
 
             RegisterCallback(CalamityID.Item("BlueCandle"), (PPP) =>
             {
-                PPP.CP.blueCandle = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().blueCandle = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("BlueSpeedCandle")] = true;
             });
             RegisterCallback(CalamityID.Item("PinkCandle"), (PPP) =>
             {
-                PPP.CP.pinkCandle = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().pinkCandle = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("PinkHealthCandle")] = true;
             });
             RegisterCallback(CalamityID.Item("PurpleCandle"), (PPP) =>
             {
-                PPP.CP.purpleCandle = true;
+                Main.LocalPlayer.GetModPlayer<CalamityPlayer>().purpleCandle = true;
                 Main.LocalPlayer.buffImmune[CalamityID.Buff("PurpleDefenseCandle")] = true;
             });
 
@@ -1029,7 +1029,7 @@ namespace PotPot
             });
             RegisterCallback(ThoriumID.Item("BouncingFlamePotion"), (PPP) =>
             {
-                ThoriumPlayer TP = PPP.TP;
+                ThoriumPlayer TP = Main.LocalPlayer.GetModPlayer<ThoriumPlayer>();
                 for (int i = 0; i < 200; i++)
                 {
                     NPC npc = Main.npc[i];
@@ -1096,7 +1096,7 @@ namespace PotPot
             RegisterCallback(ThoriumID.Item("ConflagrationPotion"), (PPP) =>
             {
                 Main.LocalPlayer.allDamage += 0.15f;
-                PPP.TP.conflagrate = true;
+                Main.LocalPlayer.GetModPlayer<ThoriumPlayer>().conflagrate = true;
                 Lighting.AddLight(Main.LocalPlayer.position, 0.3f, 0.1f, 0.05f);
                 Vector2 vector;
                 vector = new Vector2((float)Main.rand.Next(-40, 41), (float)Main.rand.Next(-40, 41));
@@ -1115,7 +1115,7 @@ namespace PotPot
             });
             RegisterCallback(ThoriumID.Item("CreativityPotion"), (PPP) =>
             {
-                PPP.TP.bardDropPotion++;
+                Main.LocalPlayer.GetModPlayer<ThoriumPlayer>().bardDropPotion++;
                 Main.LocalPlayer.buffImmune[ThoriumID.Buff("CreativityDrop")] = true;
             });
             RegisterCallback(ThoriumID.Item("FishRepellent"), (PPP) =>
@@ -1140,7 +1140,7 @@ namespace PotPot
             });
             RegisterCallback(ThoriumID.Item("HolyPotion"), (PPP) =>
             {
-                PPP.TP.healBonus++;
+                Main.LocalPlayer.GetModPlayer<ThoriumPlayer>().healBonus++;
                 Main.LocalPlayer.buffImmune[ThoriumID.Buff("HolyBonus")] = true;
             });
             RegisterCallback(ThoriumID.Item("SilverTonguePotion"), (PPP) =>
@@ -1239,12 +1239,12 @@ namespace PotPot
             });
             RegisterCallback(ThoriumID.Item("FrenzyPotion"), (PPP) =>
             {
-                PPP.TP.attackSpeed += 0.08f;
+                Main.LocalPlayer.GetModPlayer<ThoriumPlayer>().attackSpeed += 0.08f;
                 Main.LocalPlayer.buffImmune[ThoriumID.Buff("Frenzy")] = true;
             });
             RegisterCallback(ThoriumID.Item("GlowingPotion"), (PPP) =>
             {
-                PPP.TP.radiantBoost += 0.1f;
+                Main.LocalPlayer.GetModPlayer<ThoriumPlayer>().radiantBoost += 0.1f;
                 Main.LocalPlayer.buffImmune[ThoriumID.Buff("RadiantBoost")] = true;
             });
             RegisterCallback(ThoriumID.Item("DashPotion"), (PPP) =>
@@ -1254,13 +1254,13 @@ namespace PotPot
             });
             RegisterCallback(ThoriumID.Item("AssassinPotion"), (PPP) =>
             {
-                PPP.TP.assassinThrower = true;
+                Main.LocalPlayer.GetModPlayer<ThoriumPlayer>().assassinThrower = true;
                 Main.LocalPlayer.buffImmune[ThoriumID.Buff("AssassinBuff")] = true;
             });
             RegisterCallback(ThoriumID.Item("HydrationPotion"), (PPP) =>
             {
-                PPP.TP.techRechargeBonus = 30;
-                PPP.TP.throwerExhaustionRegenBonus += 0.25f;
+                Main.LocalPlayer.GetModPlayer<ThoriumPlayer>().techRechargeBonus = 30;
+                Main.LocalPlayer.GetModPlayer<ThoriumPlayer>().throwerExhaustionRegenBonus += 0.25f;
                 Main.LocalPlayer.buffImmune[ThoriumID.Buff("HydrationBuff")] = true;
             });
 
@@ -1269,7 +1269,7 @@ namespace PotPot
 
             RegisterCallback(ThoriumID.Item("ExplosiveCoatingItem"), (PPP) =>
             {
-                PPP.TP.explodeCoat = true;
+                Main.LocalPlayer.GetModPlayer<ThoriumPlayer>().explodeCoat = true;
                 Main.LocalPlayer.buffImmune[ThoriumID.Buff("ExplosionCoating")] = true;
                 Main.LocalPlayer.buffImmune[ThoriumID.Buff("FrostCoating")] = true;
                 Main.LocalPlayer.buffImmune[ThoriumID.Buff("GorganCoating")] = true;
@@ -1278,7 +1278,7 @@ namespace PotPot
             });
             RegisterCallback(ThoriumID.Item("FrostCoatingItem"), (PPP) =>
             {
-                PPP.TP.freezeCoat = true;
+                Main.LocalPlayer.GetModPlayer<ThoriumPlayer>().freezeCoat = true;
                 Main.LocalPlayer.buffImmune[ThoriumID.Buff("ExplosionCoating")] = true;
                 Main.LocalPlayer.buffImmune[ThoriumID.Buff("FrostCoating")] = true;
                 Main.LocalPlayer.buffImmune[ThoriumID.Buff("GorganCoating")] = true;
@@ -1287,7 +1287,7 @@ namespace PotPot
             });
             RegisterCallback(ThoriumID.Item("GorganCoatingItem"), (PPP) =>
             {
-                PPP.TP.gorganCoat = true;
+                Main.LocalPlayer.GetModPlayer<ThoriumPlayer>().gorganCoat = true;
                 Main.LocalPlayer.buffImmune[ThoriumID.Buff("ExplosionCoating")] = true;
                 Main.LocalPlayer.buffImmune[ThoriumID.Buff("FrostCoating")] = true;
                 Main.LocalPlayer.buffImmune[ThoriumID.Buff("GorganCoating")] = true;
@@ -1296,7 +1296,7 @@ namespace PotPot
             });
             RegisterCallback(ThoriumID.Item("SporeCoatingItem"), (PPP) =>
             {
-                PPP.TP.sporeCoat = true;
+                Main.LocalPlayer.GetModPlayer<ThoriumPlayer>().sporeCoat = true;
                 Main.LocalPlayer.buffImmune[ThoriumID.Buff("ExplosionCoating")] = true;
                 Main.LocalPlayer.buffImmune[ThoriumID.Buff("FrostCoating")] = true;
                 Main.LocalPlayer.buffImmune[ThoriumID.Buff("GorganCoating")] = true;
@@ -1305,7 +1305,7 @@ namespace PotPot
             });
             RegisterCallback(ThoriumID.Item("ToxicCoatingItem"), (PPP) =>
             {
-                PPP.TP.sporeCoat = true;
+                Main.LocalPlayer.GetModPlayer<ThoriumPlayer>().sporeCoat = true;
                 Main.LocalPlayer.buffImmune[ThoriumID.Buff("ExplosionCoating")] = true;
                 Main.LocalPlayer.buffImmune[ThoriumID.Buff("FrostCoating")] = true;
                 Main.LocalPlayer.buffImmune[ThoriumID.Buff("GorganCoating")] = true;
